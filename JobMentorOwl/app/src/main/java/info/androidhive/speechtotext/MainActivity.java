@@ -1,27 +1,31 @@
 package info.androidhive.speechtotext;
 
-import java.util.ArrayList;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 
 import info.androidhive.speechtotext.SpeechConverter.ConversionCompletion;
 import info.androidhive.speechtotext.SpeechConverter.SpeechToTextConvertor;
+import info.androidhive.speechtotext.SpeechConverter.TextToSpeechConvertor;
 
+import android.view.animation.AlphaAnimation;
+
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
 	private String[] questions = {
 			"What is your job?",
 			"What is your level of education?",
-			"How many years of experience do you have?"
+            "What industry do you work in?",
+            "How many years of related professional work experience do you have?"
 	};
 
 	// User's answer to questions[0]
@@ -36,17 +40,20 @@ public class MainActivity extends Activity {
 		return questions[questionIndex];
 	}
 
-	private void incrementQuestionIndex() {
+	private void askNextQuestion() {
 		if (questionIndex >= questions.length) {
 			return;
 		}
 		questionIndex++;
+
+        promptSpeechInput();
 	}
 
 	private TextView botTextView;
 	private TextView userTextView;
 
 	private ImageButton btnSpeak;
+    private ImageButton btnRestart;
 	private final int REQ_CODE_SPEECH_INPUT = 100;
 
 	@Override
@@ -57,124 +64,88 @@ public class MainActivity extends Activity {
 		botTextView = (TextView) findViewById(R.id.questionView);
 		userTextView = (TextView) findViewById(R.id.answerView);
 		btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        btnRestart = (ImageButton) findViewById(R.id.btnRestart);
 
 		// hide the action bar
 		getActionBar().hide();
 
-
-
 		btnSpeak.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// Reset & ask the first question!
-				botTextView.setText("");
-				userTextView.setText("");
-				questionIndex = 0;
-
 				promptSpeechInput();
 			}
 		});
+
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Reset & ask the first question!
+                questionIndex = 0;
+                promptSpeechInput();
+            }
+        });
 	}
 
 	private SpeechRecognizer myRecognizer;
 	Intent intent;
 
-
-
     private void promptSpeechInput() {
-        SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new ConversionCompletion() {
-            @Override
-            public void onCompletion(boolean success, String result) {
-                if (success) {
+        double seconds = questionIndex == 0 ? 0.0 : 1;
 
-                    System.out.println("SUPER IMPORTANT success");
-                    botTextView.setText(result);
+        Delay.delay(seconds, new Delay.DelayCallback() {
+            @Override
+            public void afterDelay() {
+                if (questionIndex < questions.length) {
+                    botTextView.setText(currentQuestion());
+                    userTextView.setText("");
+
+                    TextToSpeechConvertor conv = new TextToSpeechConvertor(
+                            currentQuestion(), getApplicationContext(), new ConversionCompletion() {
+
+                        @Override
+                        public void onCompletion(boolean success, String result) {
+                            if (success) {
+                                MainActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getSpeechInput();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onPartialResult(String partial) {}
+                    });
                 }
             }
         });
     }
 
-	// Show google speech input dialog
-//	private void promptSpeechInput3() {
-//		// THIS IS NEW
-//		myRecognizer = SpeechRecognizer.createSpeechRecognizer(MainActivity.this);
-//		SpeechListener mRecognitionListener = new SpeechListener();
-//		myRecognizer.setRecognitionListener(mRecognitionListener);
-//
-//		intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-//				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-//
-//		intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-//
-//		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, currentQuestion());
-//
-//		// OLD
-////		try {
-////			startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-////		} catch (ActivityNotFoundException a) {
-////			Toast.makeText(getApplicationContext(),
-////					getString(R.string.speech_not_supported),
-////					Toast.LENGTH_SHORT).show();
-////		}
-//
-//		// NEW
-//		myRecognizer.startListening(intent);
-//	}
+    private void getSpeechInput() {
+        SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new ConversionCompletion() {
+            @Override
+            public void onPartialResult(String partial) {
+                userTextView.setText(partial);
+            }
 
-	/**
-	 * Receiving speech input
-	 * */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+            @Override
+            public void onCompletion(boolean success, String result) {
+                if (success) {
+                    userTextView.setText(result);
 
-		System.out.println("request code " + requestCode);
-
-		switch (requestCode) {
-		case REQ_CODE_SPEECH_INPUT: {
-			if (resultCode == RESULT_OK && null != data) {
-
-				ArrayList<String> result = data
-						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-				// Get user response
-				String userResponse = result.get(0);
-
-				// Send it via the network
-				Network network = new Network();
-				try {
-					network.sendPost(userResponse, new CompletionHandler(){
-						@Override
-						public void handle(boolean success, String response) {
-							if (success) {
-
-								final String finalResponse = response;
-								// Update question view
-								MainActivity.this.runOnUiThread(new Runnable() {
-									@Override
-									public void run() {
-										botTextView.setText(finalResponse);
-										incrementQuestionIndex();
-									}
-								});
-
-							}
-						}
-					});
-				} catch (Exception e) {
-					System.out.println("Error with POST: " + e);
-				}
-
-				// Display user response
-				botTextView.setText(userResponse);
-				System.out.println("User answer: " + userResponse);
-			}
-			break;
-		}
-		}
-	}
+                    if (questionIndex == questions.length - 1) {
+                        postToAPI(Network.Type.AUTOMATION_PERCENTAGE, currentJob);
+                    } else {
+                        if (questionIndex == 0) {
+                            currentJob = result;
+                        }
+                        askNextQuestion();
+                    }
+                }
+            }
+        });
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -183,62 +154,79 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	private void postToAPI(Network.Type apiType, String userInput) {
+        // Send it via the network
+        Network network = new Network();
+        try {
+            network.sendPost(apiType, userInput, new CompletionHandler(){
+                @Override
+                public void handle(boolean success, String response) {
+                    if (success) {
+                        final String finalResponse = response;
 
+                        System.out.println("API Response" + finalResponse);
 
-
-	// Recognizer Listener --------------
-	public class SpeechListener implements RecognitionListener {
-		public void onBufferReceived(byte[] buffer) {
-		}
-		public void onError(int error) {
-			//if critical error then exit
-        if(error == SpeechRecognizer.ERROR_CLIENT || error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS){
-//            Log.d(TAG, "client error");
-            System.out.println("SpeechListener: Client error");
-
+                        // Update question view
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                botTextView.setText(finalResponse);
+                                userTextView.setText("");
+                                askNextQuestion();
+                            }
+                        });
+                    }
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Error with POST: " + e);
         }
+    }
 
-		}
-		public void onEvent(int eventType, Bundle params) {
-//        Log.d(TAG, "onEvent");
-		}
-		public void onPartialResults(Bundle partialResults) {
-			System.out.println("ON PARTIAL RESULTS");
-		}
-		public void onReadyForSpeech(Bundle params) {
-//        Log.d(TAG, "on ready for speech");
-		}
+	// Fade textView
+    private void setUpFadeAnimation(final TextView textView) {
+        // Start from 0.1f if you desire 90% fade animation
+        final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+        fadeIn.setDuration(1000);
+        fadeIn.setStartOffset(3000);
+        // End to 0.1f if you desire 90% fade animation
+        final Animation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+        fadeOut.setDuration(1000);
+        fadeOut.setStartOffset(3000);
 
-		public void onResults(Bundle results) {
-			System.out.println("ON RESULTS " + results);
+        fadeIn.setAnimationListener(new Animation.AnimationListener(){
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                // start fadeOut when fadeIn ends (continue)
+                textView.startAnimation(fadeOut);
+            }
 
-//        Log.d(TAG, "on results");
-//        ArrayList<String> matches = null;
-//        if(results != null){
-//            matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-//            if(matches != null){
-//                Log.d(TAG, "results are " + matches.toString());
-//                final ArrayList<String> matchesStrings = matches;
-//                processCommand(matchesStrings);
-//                if(!killCommanded)
-//                    mSpeechRecognizer.startListening(mSpeechIntent);
-//                else
-//                    finish();
-//
-//            }
-//        }
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
 
-		}
-		public void onRmsChanged(float rmsdB) {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+        });
 
-		}
+        fadeOut.setAnimationListener(new Animation.AnimationListener(){
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                textView.setText("");
+                textView.setAlpha(1.0f);
+//                textView.startAnimation(fadeIn);
+            }
 
-		public void onBeginningOfSpeech() {
-			System.out.println("speech beginning");
-		}
-		public void onEndOfSpeech() {
-			System.out.println("speech done");
-		}
-	};
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
 
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+        });
+
+        textView.startAnimation(fadeOut);
+    }
 }

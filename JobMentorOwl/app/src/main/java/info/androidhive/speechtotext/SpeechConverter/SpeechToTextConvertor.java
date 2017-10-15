@@ -38,45 +38,41 @@ public class SpeechToTextConvertor {
         private static final String TAG = "RecognitionListener";
 
         public void onReadyForSpeech(Bundle params) {
-            Log.d(TAG, "onReadyForSpeech");
+//            Log.d(TAG, "onReadyForSpeech");
         }
 
         public void onBeginningOfSpeech() {
-            Log.d(TAG, "onBeginningOfSpeech");
+//            Log.d(TAG, "onBeginningOfSpeech");
         }
 
         public void onRmsChanged(float rmsdB) {
-            Log.d(TAG, "onRmsChanged");
+//            Log.d(TAG, "onRmsChanged");
         }
 
         public void onBufferReceived(byte[] buffer) {
-            Log.d(TAG, "onBufferReceived");
+//            Log.d(TAG, "onBufferReceived");
         }
 
         public void onEndOfSpeech() {
-            Log.d(TAG, "onEndofSpeech");
+//            Log.d(TAG, "onEndofSpeech");
         }
 
         public void onError(int error) {
             Log.e(TAG, "error " + error);
-
             CompletionConversion.onCompletion(false, "");
         }
 
         public void onResults(Bundle results) {
             data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             System.out.println("onResults: " + data.get(0) + "\n");
-
             CompletionConversion.onCompletion(true, data.get(0) + "\n");
         }
 
         public void onPartialResults(Bundle partialResults) {
             data = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-
-            String result = data.get(0) + "\n";
-            System.out.println("on partial results: " + result);
-
-            CompletionConversion.onCompletion(true, result);
+            String partial = data.get(0) + "\n";
+            System.out.println("on partial results: " + partial);
+            CompletionConversion.onPartialResult(partial);
         }
 
         public void onEvent(int eventType, Bundle params) {

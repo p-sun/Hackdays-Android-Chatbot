@@ -5,6 +5,17 @@
     android:background="@drawable/bg_gradient"
     android:orientation="vertical" >
 
+    <ImageButton
+        android:id="@+id/btnRestart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/restart" />
+
     <TextView
         android:id="@+id/questionView"
         android:layout_width="wrap_content"
@@ -12,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
+        android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="40dp"
         android:textStyle="italic"
@@ -24,6 +36,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="280dp"
+        android:padding="10dp"
         android:textColor="@color/answerColor"
         android:textSize="35dp"
         android:textStyle="normal"

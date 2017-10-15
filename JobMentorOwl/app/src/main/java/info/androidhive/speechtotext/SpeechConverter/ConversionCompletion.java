@@ -6,4 +6,5 @@ package info.androidhive.speechtotext.SpeechConverter;
 
 public interface ConversionCompletion {
     void onCompletion(boolean success, String result);
+    void onPartialResult(String partial);
 }

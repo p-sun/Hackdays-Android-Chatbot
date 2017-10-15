@@ -23,20 +23,38 @@ interface CompletionHandler {
 }
 
 public class Network {
+    public enum Type {
+        CHAT_BOT, JOB_RECOMMENDER, AUTOMATION_PERCENTAGE
+    }
+
+    private String linkForType(Type aType) {
+        switch (aType) {
+            case CHAT_BOT:
+                return "/chatbot";
+            case JOB_RECOMMENDER:
+                return "/job_recommender";
+            case AUTOMATION_PERCENTAGE:
+                return "/automation_percentage";
+        }
+        return "";
+    }
 
     class PostUserResponseTask extends AsyncTask<String, Void, Void> {
+        private Type type;
         private final String userResponse;
         private final CompletionHandler completion;
 
-        public PostUserResponseTask(String userAnswer, CompletionHandler completion) {
+        public PostUserResponseTask(Type aType, String userAnswer, CompletionHandler completion) {
             this.userResponse = userAnswer;
             this.completion = completion;
+            this.type = aType;
         }
 
         @Override
         protected Void doInBackground(String... params) {
             try {
-                URL url = new URL("https://272c67d1.ngrok.io/response");
+                String link = linkForType(type);
+                URL url = new URL("https://272c67d1.ngrok.io" + link);
                 String urlParameters = "response=" + userResponse;
                 HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                 connection.setReadTimeout(10000);
@@ -85,7 +103,7 @@ public class Network {
     }
 
     // HTTP POST request
-    public void sendPost(String userResponse, CompletionHandler completion) throws Exception {
-        new PostUserResponseTask(userResponse, completion).execute();
+    public void sendPost(Type type, String userResponse, CompletionHandler completion) throws Exception {
+        new PostUserResponseTask(type, userResponse, completion).execute();
     }
 }

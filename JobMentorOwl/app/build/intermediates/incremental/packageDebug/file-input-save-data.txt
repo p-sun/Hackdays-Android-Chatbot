@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun Oct 15 03:22:57 EDT 2017
+#Sun Oct 15 07:37:19 EDT 2017
 2.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
 5.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/resources.arsc
 5.set=ANDROID_RESOURCE
@@ -7,15 +7,17 @@
 6.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/drawable/bg_gradient.xml
 2.set=ANDROID_RESOURCE
 4.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
-7.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/layout/activity_main.xml
+7.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/drawable-xxhdpi-v4/restart.png
 7.set=ANDROID_RESOURCE
-count=9
+count=10
 0.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/drawable-xxhdpi-v4/ico_mic.png
 5.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
-8.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/menu/main.xml
+8.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/layout/activity_main.xml
 4.set=ANDROID_RESOURCE
 6.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
 1.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b6166b5c08a0cc812ab120f5e16e1b8cd6deb15d/classes.dex
+9.set=ANDROID_RESOURCE
+9.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/menu/main.xml
 1.set=DEX
 7.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
 2.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/AndroidManifest.xml
@@ -25,6 +27,7 @@ count=9
 3.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c7804457f7116dc39e605cc03c42909c93dab748/classes.dex
 3.set=DEX
 1.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b6166b5c08a0cc812ab120f5e16e1b8cd6deb15d
+9.base=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_
 4.file=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/resources-debug.ap_/res/drawable-xxhdpi-v4/ic_launcher.png
 8.set=ANDROID_RESOURCE
 0.set=ANDROID_RESOURCE
