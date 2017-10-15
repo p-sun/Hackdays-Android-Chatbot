@@ -1,0 +1,4 @@
+#Sun Oct 15 03:22:57 EDT 2017
+base.0=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-v4-19.1.0_b033f9a5620d21df38486b6b45e4a0cf3e86a412
+renamed.0=classes.dex
+file.0=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-v4-19.1.0_b033f9a5620d21df38486b6b45e4a0cf3e86a412/classes.dex

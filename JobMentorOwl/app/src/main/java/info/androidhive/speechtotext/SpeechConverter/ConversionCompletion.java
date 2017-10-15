@@ -1,0 +1,9 @@
+package info.androidhive.speechtotext.SpeechConverter;
+
+/**
+ * Created by psun on 2017-10-15.
+ */
+
+public interface ConversionCompletion {
+    void onCompletion(boolean success, String result);
+}

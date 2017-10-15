@@ -1,0 +1,7 @@
+#Sun Oct 15 03:22:57 EDT 2017
+base.0=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b6166b5c08a0cc812ab120f5e16e1b8cd6deb15d
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c7804457f7116dc39e605cc03c42909c93dab748/classes.dex
+base.1=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c7804457f7116dc39e605cc03c42909c93dab748
+file.0=/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b6166b5c08a0cc812ab120f5e16e1b8cd6deb15d/classes.dex

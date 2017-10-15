@@ -1,0 +1,315 @@
+[
+    {
+        "outputFile": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 45,
+                    "endOffset": 96
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 98,
+                        "endColumn": 45,
+                        "endOffset": 139
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 101,
+                    "endColumn": 49,
+                    "endOffset": 146
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 200,
+                        "endColumn": 49,
+                        "endOffset": 245
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 151,
+                    "endColumn": 51,
+                    "endOffset": 198
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 147,
+                        "endColumn": 51,
+                        "endOffset": 194
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 203,
+                    "endColumn": 39,
+                    "endOffset": 238
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/colors.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 57,
+                        "endColumn": 39,
+                        "endOffset": 92
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 243,
+                    "endColumn": 57,
+                    "endOffset": 296
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 92,
+                        "endColumn": 57,
+                        "endOffset": 145
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 301,
+                    "endColumn": 55,
+                    "endOffset": 352
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 151,
+                        "endColumn": 55,
+                        "endOffset": 202
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 357,
+                    "endColumn": 52,
+                    "endOffset": 405
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 112,
+                        "endColumn": 52,
+                        "endOffset": 160
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 410,
+                    "endColumn": 51,
+                    "endOffset": 457
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endColumn": 51,
+                        "endOffset": 106
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 462,
+                    "endColumn": 52,
+                    "endOffset": 510
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 166,
+                        "endColumn": 52,
+                        "endOffset": 214
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 515,
+                    "endColumn": 64,
+                    "endOffset": 575
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 427,
+                        "endColumn": 64,
+                        "endOffset": 487
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 580,
+                    "endColumn": 82,
+                    "endOffset": 658
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 493,
+                        "endColumn": 82,
+                        "endOffset": 571
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 663,
+                    "endColumn": 97,
+                    "endOffset": 756
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 284,
+                        "endColumn": 97,
+                        "endOffset": 377
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 761,
+                    "endColumn": 56,
+                    "endOffset": 813
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 220,
+                        "endColumn": 62,
+                        "endOffset": 278
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 818,
+                    "endColumn": 40,
+                    "endOffset": 854
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 383,
+                        "endColumn": 40,
+                        "endOffset": 419
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 859,
+                    "endLine": 22,
+                    "endColumn": 12,
+                    "endOffset": 1145
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 191,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 481
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 1150,
+                    "endLine": 25,
+                    "endColumn": 12,
+                    "endOffset": 1305
+                },
+                "from": {
+                    "file": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/values/styles.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 522,
+                        "endLine": 17,
+                        "endColumn": 12,
+                        "endOffset": 679
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/merged/debug/drawable-mdpi/ic_launcher.png",
+        "source": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/drawable-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/build/intermediates/res/merged/debug/drawable-mdpi/ico_mic.png",
+        "source": "/Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/res/drawable-mdpi/ico_mic.png"
+    }
+]
