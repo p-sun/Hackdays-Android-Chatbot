@@ -25,7 +25,7 @@
         android:layout_marginTop="100dp"
         android:padding="10dp"
         android:textColor="@color/white"
-        android:textSize="40dp"
+        android:textSize="34dp"
         android:textStyle="italic"
         android:gravity="center" />
 
@@ -35,10 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="360dp"
         android:padding="10dp"
         android:textColor="@color/answerColor"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textStyle="normal"
         android:gravity="center" />
 

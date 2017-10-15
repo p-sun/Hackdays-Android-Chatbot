@@ -19,13 +19,16 @@ import info.androidhive.speechtotext.SpeechConverter.TextToSpeechConvertor;
 
 import android.view.animation.AlphaAnimation;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
 	private String[] questions = {
 			"What is your job?",
 			"What is your level of education?",
             "What industry do you work in?",
-            "How many years of related professional work experience do you have?"
+            "How many years of related experience do you have?"
 	};
 
 	// User's answer to questions[0]
@@ -40,13 +43,15 @@ public class MainActivity extends Activity {
 		return questions[questionIndex];
 	}
 
-	private void askNextQuestion() {
-		if (questionIndex >= questions.length) {
-			return;
-		}
-		questionIndex++;
+	// Called when an API response returns with a botResponse
+	private void askNextQuestion(String botResponse) {
+        System.out.println("Question index (ask next Q) " + questionIndex);
 
-        promptSpeechInput();
+        if (questionIndex != questions.length) {
+            questionIndex++;
+            // Don't increment
+        }
+        promptSpeechInput(botResponse);
 	}
 
 	private TextView botTextView;
@@ -72,7 +77,7 @@ public class MainActivity extends Activity {
 		btnSpeak.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				promptSpeechInput();
+				promptSpeechInput("");
 			}
 		});
 
@@ -81,7 +86,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 // Reset & ask the first question!
                 questionIndex = 0;
-                promptSpeechInput();
+                recommendationIndex = 0;
+                jobs = new ArrayList<JobRecommendation>();
+                promptSpeechInput("");
             }
         });
 	}
@@ -89,40 +96,75 @@ public class MainActivity extends Activity {
 	private SpeechRecognizer myRecognizer;
 	Intent intent;
 
-    private void promptSpeechInput() {
+    ArrayList<JobRecommendation> jobs = new ArrayList<JobRecommendation>();
+    int recommendationIndex = 0;
+
+    // 1) Display previous bot response / Manual question
+    private void promptSpeechInput(String aBotResponse) {
+        System.out.println("prompt speech input: " + questionIndex);
         double seconds = questionIndex == 0 ? 0.0 : 1;
+        final String botResponse = aBotResponse;
 
         Delay.delay(seconds, new Delay.DelayCallback() {
             @Override
             public void afterDelay() {
-                if (questionIndex < questions.length) {
-                    botTextView.setText(currentQuestion());
-                    userTextView.setText("");
-
-                    TextToSpeechConvertor conv = new TextToSpeechConvertor(
-                            currentQuestion(), getApplicationContext(), new ConversionCompletion() {
-
-                        @Override
-                        public void onCompletion(boolean success, String result) {
-                            if (success) {
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getSpeechInput();
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onPartialResult(String partial) {}
-                    });
+                if ((questionIndex == questions.length) && jobs.isEmpty()) {
+                    jobs = JobRecommendation.arrayForJson(botResponse);
                 }
+
+                String question = "";
+                if (questionIndex < questions.length) { // 0...3  ignore answers
+                    question = currentQuestion();
+                } else if (questionIndex == questions.length - 1 && !botResponse.isEmpty()) { // 4
+                    // Automation Percentage response
+                    question = botResponse;
+                } else if ((questionIndex == questions.length) && jobs.isEmpty()) { // 5
+                    question = botResponse;//"Sorry, I couldn't find you an amazing match to your current job. Would you like to chat?";
+                } else if ((questionIndex == questions.length) && !jobs.isEmpty()) { // 5
+                    // get a job at a current index
+                    JobRecommendation currentJob = jobs.get(recommendationIndex);
+                    System.out.println("Current job " + currentJob);
+                    // Increment index
+                    recommendationIndex++;
+                    recommendationIndex = recommendationIndex % jobs.size();
+                    // Give a sentence
+                    question = currentJob.sentence;
+                } else if (questionIndex == (questions.length + 2)) { // 6
+                    // Any chat
+                    question = "Chat with me";
+                } else { // 7
+                    question = botResponse;
+                    System.out.println("questionIndex--" + questionIndex);
+                }
+
+                botTextView.setText(question);
+                userTextView.setText("");
+
+                // Speak question
+                TextToSpeechConvertor conv = new TextToSpeechConvertor(
+                        question, getApplicationContext(), new ConversionCompletion() {
+
+                    @Override
+                    public void onCompletion(boolean success, String result) {
+                        if (success) {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getUserResponse();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onPartialResult(String partial) {}
+                });
             }
         });
     }
 
-    private void getSpeechInput() {
+    // (2) Post TO API from user input.
+    private void getUserResponse() {
         SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new ConversionCompletion() {
             @Override
             public void onPartialResult(String partial) {
@@ -134,13 +176,25 @@ public class MainActivity extends Activity {
                 if (success) {
                     userTextView.setText(result);
 
-                    if (questionIndex == questions.length - 1) {
-                        postToAPI(Network.Type.AUTOMATION_PERCENTAGE, currentJob);
-                    } else {
+                    if (questionIndex < questions.length - 1) { // 3
                         if (questionIndex == 0) {
                             currentJob = result;
                         }
-                        askNextQuestion();
+                        askNextQuestion("");
+                    } else if (questionIndex == questions.length - 1) { // 4
+                        postToAPI(Network.Type.AUTOMATION_PERCENTAGE, currentJob);
+                    } else if (questionIndex == questions.length && !result.contains("chat")) { // 5
+                        System.out.println("calling JOB recommender");
+                        if (jobs.isEmpty()) {
+                            postToAPI(Network.Type.JOB_RECOMMENDER, currentJob);
+                        } else {
+                            // No API needed, b/c we already searched the recs for that job!
+                            promptSpeechInput("");
+                        }
+                    } else { // 6+
+                        System.out.println("Question index @ for chatbox " + questionIndex);
+                        questionIndex = questions.length + 2;
+                        postToAPI(Network.Type.CHAT_BOT, result);
                     }
                 }
             }
@@ -170,9 +224,7 @@ public class MainActivity extends Activity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                botTextView.setText(finalResponse);
-                                userTextView.setText("");
-                                askNextQuestion();
+                                askNextQuestion(finalResponse);
                             }
                         });
                     }
@@ -229,4 +281,5 @@ public class MainActivity extends Activity {
 
         textView.startAnimation(fadeOut);
     }
+
 }

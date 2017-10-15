@@ -53,6 +53,9 @@ public class Network {
         @Override
         protected Void doInBackground(String... params) {
             try {
+                // Offline TEST
+
+
                 String link = linkForType(type);
                 URL url = new URL("https://272c67d1.ngrok.io" + link);
                 String urlParameters = "response=" + userResponse;

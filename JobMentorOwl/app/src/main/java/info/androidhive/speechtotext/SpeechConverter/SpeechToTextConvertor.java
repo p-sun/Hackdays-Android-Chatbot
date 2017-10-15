@@ -71,7 +71,6 @@ public class SpeechToTextConvertor {
         public void onPartialResults(Bundle partialResults) {
             data = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             String partial = data.get(0) + "\n";
-            System.out.println("on partial results: " + partial);
             CompletionConversion.onPartialResult(partial);
         }
 
