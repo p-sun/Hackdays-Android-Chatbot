@@ -36,7 +36,9 @@ public class MainActivity extends Activity {
 
 	// Which mode the user is currently in.
 	// 0 - questions.count-1 ------ currently answering that question
-	// questions.count ------------ chatbot mode
+	// questions.count + 2 ------------ chatbot mode
+    // TODO use a tree to represent the different routes that the user can enter.
+    // This variable was an terrible hack to save time.
 	private int questionIndex = 0;
 
 	String currentQuestion() {
