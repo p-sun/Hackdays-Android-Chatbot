@@ -38,7 +38,7 @@ Eclipse projects. Here's how the projects were restructured:
 
 Next Steps:
 -----------
-You can now build the project. The Gradle project needs network
+You can now build the project. The Gradle project needs apiManager
 connectivity to download dependencies.
 
 Bugs:

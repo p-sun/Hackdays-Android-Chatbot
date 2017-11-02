@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MentorMe</string>
+    <string name="app_name">HootMentor</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
     <string name="tap_on_mic"> </string>
-
-    <string name="question_1_get_job">What is your job?</string>
-    <string name="question_2_get_education">What is your education level?</string>
 
 </resources>

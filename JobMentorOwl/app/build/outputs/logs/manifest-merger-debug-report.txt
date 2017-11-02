@@ -1,22 +1,32 @@
 -- Merging decision tree log ---
 manifest
 ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:1-33:12
 	package
-		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:3:5-44
+		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:3:5-39
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
 	android:versionName
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:5:5-30
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:11-69
 	android:versionCode
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:4:5-28
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
-	xmlns:android
-		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:2:11-69
 uses-sdk
 ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:9:9-38
 		INJECTED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml
@@ -37,18 +47,18 @@ application
 ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:17:5-31:19
 	android:label
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:20:9-41
-	android:allowBackup
-		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:18:9-35
 	android:icon
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:19:9-45
+	android:allowBackup
+		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:18:9-35
 	android:theme
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:21:9-40
-activity#info.androidhive.speechtotext.MainActivity
+activity#info.mentorme.hootmentor.MainActivity
 ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:22:9-30:20
 	android:label
 		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:24:13-45
 	android:name
-		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:23:13-70
+		ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:23:13-65
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from /Users/psun/Documents/Dev/HackingTheFutureOfWork/_Hackdays-Android-Chatbot/JobMentorOwl/app/src/main/AndroidManifest.xml:25:13-29:29
 action#android.intent.action.MAIN
