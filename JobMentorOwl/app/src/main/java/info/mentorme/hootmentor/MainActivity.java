@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import info.mentorme.hootmentor.Dialog.*;
+import info.mentorme.hootmentor.Models.User;
 import info.mentorme.hootmentor.Networking.ApiManager;
 import info.mentorme.hootmentor.SpeechConverter.ConversionCompletion;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextConvertor;
@@ -24,7 +25,8 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
 
-
+    final User user = new User();
+    DialogTree dialog;
 
 	private String[] questions = {
 			"What is your job?",
@@ -95,6 +97,8 @@ public class MainActivity extends Activity {
                 promptSpeechInput("");
             }
         });
+
+        setupDialogTree();
 	}
 
     ArrayList<JobRecommendation> jobs = new ArrayList<JobRecommendation>();
@@ -237,8 +241,6 @@ public class MainActivity extends Activity {
     }
 
     void setupDialogTree() {
-        User user = new User();
-
         ChoiceNode yes = new ChoiceNode(
                 "Answered yes",
                 null,
@@ -262,7 +264,7 @@ public class MainActivity extends Activity {
                 new NodeAction() {
                     @Override
                     public void userDidTalk(String userTalk) {
-//                        user.education = userTalk;
+                        user.education = userTalk;
                     }
                 });
 
@@ -272,21 +274,20 @@ public class MainActivity extends Activity {
                 new NodeAction() {
                     @Override
                     public void userDidTalk(String userTalk) {
-//                        user.jobTitle = userTalk;
+                        user.jobTitle = userTalk;
                     }
                 });
 
-        DialogTree dialog = new DialogTree(jobQuestion);
+        dialog = new DialogTree(jobQuestion);
 
         System.out.println(dialog.botTalk("some user talk 1"));
         System.out.println(dialog.botTalk("some user talk 2"));
         System.out.println(dialog.botTalk("some user talk 3"));
-        System.out.println(dialog.botTalk("some user no yas 6")); // answered yes b/ in the tree it came first
+        System.out.println(dialog.botTalk("some user no yas 6")); // answered yes b/c in the tree it came first
 
         System.out.println(user.jobTitle);
         System.out.println(user.education);
     }
-
 
 	// Fade textView
     private void setUpFadeAnimation(final TextView textView) {
@@ -334,5 +335,4 @@ public class MainActivity extends Activity {
 
         textView.startAnimation(fadeOut);
     }
-
 }
