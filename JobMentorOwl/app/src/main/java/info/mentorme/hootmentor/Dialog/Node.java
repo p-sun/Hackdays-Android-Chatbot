@@ -1,0 +1,16 @@
+package info.mentorme.hootmentor.Dialog;
+
+/**
+ * Created by psun on 2017-11-02.
+ */
+
+public interface Node {
+    // If userTalk contains this keyword, this will be the next node
+    String[] keywords();
+
+    // After userTalk1, this node returns its response
+    String botTalk(String userTalk);
+
+    // After userTalk2, this node returns the next node
+    Node next(String userTalk);
+}

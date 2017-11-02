@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="info.mentorme.hootmentor.test">
+    package="info.psun.hootmentor.test">
 
-    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
 
     <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="info.androidhive.speechtotext"
+                     android:targetPackage="info.psun.hootmentor"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for info.androidhive.speechtotext"/>
+                     android:label="Tests for info.psun.hootmentor"/>
 </manifest>

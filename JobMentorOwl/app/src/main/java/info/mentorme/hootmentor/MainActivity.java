@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import info.mentorme.hootmentor.Dialog.*;
 import info.mentorme.hootmentor.Networking.ApiManager;
 import info.mentorme.hootmentor.SpeechConverter.ConversionCompletion;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextConvertor;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
+
+
 
 	private String[] questions = {
 			"What is your job?",
@@ -232,6 +235,58 @@ public class MainActivity extends Activity {
             System.out.println("Error with POST: " + e);
         }
     }
+
+    void setupDialogTree() {
+        User user = new User();
+
+        ChoiceNode yes = new ChoiceNode(
+                "Answered yes",
+                null,
+                new String[] {"yes", "yeah", "ok", "yas"},
+                null);
+
+        ChoiceNode no = new ChoiceNode(
+                "Answered not-yes",
+                null,
+                new String[] {"*"}, // Match all keywords
+                null);
+
+        ChoiceNode booleanQuestion = new ChoiceNode(
+                "Pick a boolean, yes or no?",
+                new Node[] {yes, no},
+                null);
+
+        ChoiceNode educationQuestion = new ChoiceNode(
+                "What is your education?",
+                new Node[] { booleanQuestion },
+                new NodeAction() {
+                    @Override
+                    public void userDidTalk(String userTalk) {
+//                        user.education = userTalk;
+                    }
+                });
+
+        ChoiceNode jobQuestion = new ChoiceNode(
+                "What is your job?",
+                new Node[] {educationQuestion},
+                new NodeAction() {
+                    @Override
+                    public void userDidTalk(String userTalk) {
+//                        user.jobTitle = userTalk;
+                    }
+                });
+
+        DialogTree dialog = new DialogTree(jobQuestion);
+
+        System.out.println(dialog.botTalk("some user talk 1"));
+        System.out.println(dialog.botTalk("some user talk 2"));
+        System.out.println(dialog.botTalk("some user talk 3"));
+        System.out.println(dialog.botTalk("some user no yas 6")); // answered yes b/ in the tree it came first
+
+        System.out.println(user.jobTitle);
+        System.out.println(user.education);
+    }
+
 
 	// Fade textView
     private void setUpFadeAnimation(final TextView textView) {

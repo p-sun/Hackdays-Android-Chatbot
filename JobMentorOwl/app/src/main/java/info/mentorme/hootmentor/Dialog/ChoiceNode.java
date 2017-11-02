@@ -4,32 +4,17 @@ package info.mentorme.hootmentor.Dialog;
  * Created by psun on 2017-11-02.
  */
 
-interface NodeAction {
-    void userDidTalk(String userTalk);
-}
-
-interface Node {
-    // If userTalk contains this keyword, this will be the next node
-    String[] keywords();
-
-    // After userTalk1, this node returns its response
-    String botTalk(String userTalk);
-
-    // After userTalk2, this node returns the next node
-    Node next(String userTalk);
-}
-
-class ChoiceNode implements Node {
+public class ChoiceNode implements Node {
     private String[] keywords;
     private String botTalk;
     private Node[] children;
     private NodeAction action;
 
-    ChoiceNode(String aBotTalk, Node[] someChildren, NodeAction aAction) {
+    public ChoiceNode(String aBotTalk, Node[] someChildren, NodeAction aAction) {
         setup(aBotTalk, someChildren, null, aAction);
     }
 
-    ChoiceNode(String aBotTalk, ChoiceNode[] someChildren, String[] someKeywords,  NodeAction aAction) {
+    public ChoiceNode(String aBotTalk, ChoiceNode[] someChildren, String[] someKeywords,  NodeAction aAction) {
         setup(aBotTalk, someChildren, someKeywords, aAction);
     }
 

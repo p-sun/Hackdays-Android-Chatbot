@@ -4,20 +4,20 @@ package info.mentorme.hootmentor.Dialog;
  * Created by psun on 2017-10-31.
  */
 
-class DialogTree {
+public class DialogTree {
     private Node head;
     private Node current;
 
-    DialogTree(Node aHead) {
+    public DialogTree(Node aHead) {
         this.head = aHead;
     }
 
-    void reset() {
+    public void reset() {
         current = null;
     }
 
     // From userTalk, advance to the next node & return the response of that node.
-    String botTalk(String userTalk) {
+    public String botTalk(String userTalk) {
         Node next = nextNode(userTalk);
         if (next == null) {
             return "END"; // TODO CHANGE this back to null
