@@ -16,7 +16,7 @@ import info.mentorme.hootmentor.Networking.ApiManager;
 import info.mentorme.hootmentor.SpeechConverter.ConversionCompletion;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextConvertor;
 import info.mentorme.hootmentor.SpeechConverter.TextToSpeechConvertor;
-import info.mentorme.hootmentor.Support.Delay;
+import info.mentorme.hootmentor.Support.*;
 
 import android.view.animation.AlphaAnimation;
 
@@ -28,43 +28,34 @@ public class MainActivity extends Activity {
     final User user = new User();
     DialogTree dialog;
 
-	private String[] questions = {
-			"What is your job?",
-//			"What is your level of education?",
-//            "What industry do you work in?",
-//            "How many years of related experience do you have?"
-	};
+//	private String[] questions = {
+//			"What is your job?",
+////			"What is your level of education?",
+////            "What industry do you work in?",
+////            "How many years of related experience do you have?"
+//	};
 
 	// User's answer to questions[0]
-	String currentJob = "";
-
-	// Which mode the user is currently in.
-	// 0 - questions.count-1 ------ currently answering that question
-	// questions.count + 2 ------------ chatbot mode
-    // TODO use a tree to represent the different routes that the user can enter.
-    // This variable was an terrible hack to save time.
-	private int questionIndex = 7;
-
-	String currentQuestion() {
-		return questions[questionIndex];
-	}
+//	String currentJob = "";
 
 	// Called when an API response returns with a botResponse
 	private void askNextQuestion(String botResponse) {
-        System.out.println("Question index (ask next Q) " + questionIndex);
+//        System.out.println("Question index (ask next Q) " + questionIndex);
 
-        if (questionIndex != questions.length) {
-            questionIndex++;
-            // Don't increment
-        }
-        promptSpeechInput(botResponse);
+//        if (questionIndex != questions.length) {
+//            questionIndex++;
+//            // Don't increment
+//        }
+//
+//
+//        displayBotSpeak(botResponse);
 	}
 
 	private TextView botTextView;
 	private TextView userTextView;
 
-	private ImageButton btnMic;
-    private ImageButton btnRestart;
+	private ImageButton micButton;
+    private ImageButton restartButton;
 	private final int REQ_CODE_SPEECH_INPUT = 100;
 
 	@Override
@@ -74,80 +65,62 @@ public class MainActivity extends Activity {
 
 		botTextView = (TextView) findViewById(R.id.questionView);
 		userTextView = (TextView) findViewById(R.id.answerView);
-		btnMic = (ImageButton) findViewById(R.id.btnSpeak);
-        btnRestart = (ImageButton) findViewById(R.id.btnRestart);
+		micButton = (ImageButton) findViewById(R.id.btnSpeak);
+        restartButton = (ImageButton) findViewById(R.id.btnRestart);
 
 		// hide the action bar
 		getActionBar().hide();
 
-		btnMic.setOnClickListener(new View.OnClickListener() {
+		micButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				promptSpeechInput("");
+			    // TODO getUserTalk
+//				displayBotSpeak("");
+
+                if (dialog.isAtBeginning()) {
+                    displayNextNode("");
+                } else {
+                    getUserResponse();
+                }
 			}
 		});
 
-        btnRestart.setOnClickListener(new View.OnClickListener() {
+        restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Reset & ask the first question!
-                questionIndex = 0;
+                dialog.reset();
                 recommendationIndex = 0;
                 jobs = new ArrayList<JobRecommendation>();
-                promptSpeechInput("");
+
+                displayNextNode("");
             }
         });
 
         setupDialogTree();
+
+        Permission.requestRecordAudioPermission(getApplicationContext(), this);
 	}
 
     ArrayList<JobRecommendation> jobs = new ArrayList<JobRecommendation>();
     int recommendationIndex = 0;
 
-    // 1) Display previous bot response / Manual question
-    private void promptSpeechInput(String aBotResponse) {
-        System.out.println("prompt speech input: " + questionIndex);
-        double seconds = questionIndex == 0 ? 0.0 : 1;
-        final String botResponse = aBotResponse;
+    // 1) Bot displays text, and speaks it.
+    private void displayBotSpeak(String aBotTalk) {
+//        System.out.println("prompt speech input: " + questionIndex);
+        double seconds = 1.0;//questionIndex == 0 ? 0.0 : 1;
+        final String botTalk = aBotTalk;
 
         Delay.delay(seconds, new Delay.DelayCallback() {
             @Override
             public void afterDelay() {
-                if ((questionIndex == questions.length) && jobs.isEmpty()) {
-                    jobs = JobRecommendation.arrayForJson(botResponse);
-                }
-
-                String question = "";
-                if (questionIndex < questions.length) { // 0...3  ignore answers
-                    question = currentQuestion();
-                } else if (questionIndex == questions.length - 1 && !botResponse.isEmpty()) { // 4
-                    // Automation Percentage response
-                    question = botResponse;
-                } else if ((questionIndex == questions.length) && jobs.isEmpty()) { // 5
-                    question = botResponse;//"Sorry, I couldn't find you an amazing match to your current job. Would you like to chat?";
-                } else if ((questionIndex == questions.length) && !jobs.isEmpty()) { // 5
-                    // get a job at a current index
-                    JobRecommendation currentJob = jobs.get(recommendationIndex);
-                    System.out.println("Current job " + currentJob);
-                    // Increment index
-                    recommendationIndex++;
-                    recommendationIndex = recommendationIndex % jobs.size();
-                    // Give a sentence
-                    question = currentJob.sentence;
-                } else if (questionIndex == (questions.length + 2)) { // 6
-                    // Any chat
-                    question = "Chat with me";
-                } else { // 7
-                    question = botResponse;
-                    System.out.println("questionIndex--" + questionIndex);
-                }
-
-                botTextView.setText(question);
+                // Set text
+                botTextView.setText(botTalk);
                 userTextView.setText("");
 
                 // Speak question
                 TextToSpeechConvertor conv = new TextToSpeechConvertor(
-                        question, getApplicationContext(), new ConversionCompletion() {
+                        botTalk, getApplicationContext(), new ConversionCompletion() {
 
                     @Override
                     public void onCompletion(boolean success, String result) {
@@ -168,7 +141,86 @@ public class MainActivity extends Activity {
         });
     }
 
-    // (2) Post TO API from user input.
+
+//    // 1) Bot displays text, and speaks it.
+//    private void displayBotSpeak(String aBotTalk) {
+////        System.out.println("prompt speech input: " + questionIndex);
+//        double seconds = 1.0;//questionIndex == 0 ? 0.0 : 1;
+//        final String botTalk = aBotTalk;
+//
+//        Delay.delay(seconds, new Delay.DelayCallback() {
+//            @Override
+//            public void afterDelay() {
+////                if ((questionIndex == questions.length) && jobs.isEmpty()) {
+////                    jobs = JobRecommendation.arrayForJson(botTalk);
+////                }
+//
+//                // Get current question
+//
+//
+//
+////                String question = "";
+////                if (questionIndex < questions.length) { // 0...3  ignore answers
+////                    question = currentQuestion();
+////                } else if (questionIndex == questions.length - 1 && !botTalk.isEmpty()) { // 4
+////                    // Automation Percentage response
+////                    question = botTalk;
+////                } else if ((questionIndex == questions.length) && jobs.isEmpty()) { // 5
+////                    question = botTalk;//"Sorry, I couldn't find you an amazing match to your current job. Would you like to chat?";
+////                } else if ((questionIndex == questions.length) && !jobs.isEmpty()) { // 5
+////                    // get a job at a current index
+////                    JobRecommendation currentJob = jobs.get(recommendationIndex);
+////                    System.out.println("Current job " + currentJob);
+////                    // Increment index
+////                    recommendationIndex++;
+////                    recommendationIndex = recommendationIndex % jobs.size();
+////                    // Give a sentence
+////                    question = currentJob.sentence;
+////                } else if (questionIndex == (questions.length + 2)) { // 6
+////                    // Any chat
+////                    question = "Chat with me";
+////                } else { // 7
+////                    question = botTalk;
+////                    System.out.println("questionIndex--" + questionIndex);
+////                }
+//
+//                botTextView.setText(question);
+//                userTextView.setText("");
+//
+//                // Speak question
+//                TextToSpeechConvertor conv = new TextToSpeechConvertor(
+//                        question, getApplicationContext(), new ConversionCompletion() {
+//
+//                    @Override
+//                    public void onCompletion(boolean success, String result) {
+//                        if (success) {
+//                            MainActivity.this.runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    getUserResponse();
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onPartialResult(String partial) {}
+//                });
+//            }
+//        });
+//    }
+
+
+    // Once we have the userTalk, go to next Node, and display the botTalk
+    private void displayNextNode(String userTalk) {
+        String botTalk = dialog.botTalk(userTalk);
+        if (botTalk != null && botTalk != "") {
+            displayBotSpeak(botTalk);
+        }
+    }
+
+    //  TODO(2) Get userTalk, find the next node
+    // OLD Post TO API from user input.
     private void getUserResponse() {
         SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new ConversionCompletion() {
             @Override
@@ -177,30 +229,31 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onCompletion(boolean success, String result) {
+            public void onCompletion(boolean success, String userTalk) {
                 if (success) {
-                    userTextView.setText(result);
+                    userTextView.setText(userTalk);
+                    displayNextNode(userTalk);
 
-                    if (questionIndex < questions.length - 1) { // 3
-                        if (questionIndex == 0) {
-                            currentJob = result;
-                        }
-                        askNextQuestion("");
-                    } else if (questionIndex == questions.length - 1) { // 4
-                        postToAPI(ApiManager.Endpoint.AUTOMATION_PERCENTAGE, currentJob);
-                    } else if (questionIndex == questions.length && !result.contains("chat")) { // 5
-                        System.out.println("calling JOB recommender");
-                        if (jobs.isEmpty()) {
-                            postToAPI(ApiManager.Endpoint.JOB_RECOMMENDER, currentJob);
-                        } else {
-                            // No API needed, b/c we already searched the recs for that job!
-                            promptSpeechInput("");
-                        }
-                    } else { // 6+
-                        System.out.println("Question index @ for chatbox " + questionIndex);
-                        questionIndex = questions.length + 2;
-                        postToAPI(ApiManager.Endpoint.CHAT_BOT, result);
-                    }
+//                    if (questionIndex < questions.length - 1) { // 3
+//                        if (questionIndex == 0) {
+//                            currentJob = result;
+//                        }
+//                        askNextQuestion("");
+//                    } else if (questionIndex == questions.length - 1) { // 4
+//                        postToAPI(ApiManager.Endpoint.AUTOMATION_PERCENTAGE, currentJob);
+//                    } else if (questionIndex == questions.length && !result.contains("chat")) { // 5
+//                        System.out.println("calling JOB recommender");
+//                        if (jobs.isEmpty()) {
+//                            postToAPI(ApiManager.Endpoint.JOB_RECOMMENDER, currentJob);
+//                        } else {
+//                            // No API needed, b/c we already searched the recs for that job!
+//                            displayBotSpeak("");
+//                        }
+//                    } else { // 6+
+//                        System.out.println("Question index @ for chatbox " + questionIndex);
+//                        questionIndex = questions.length + 2;
+//                        postToAPI(ApiManager.Endpoint.CHAT_BOT, result);
+//                    }
                 }
             }
         });
@@ -229,7 +282,8 @@ public class MainActivity extends Activity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                askNextQuestion(finalResponse);
+                                // TODO
+//                                askNextQuestion(finalResponse);
                             }
                         });
                     }
@@ -274,19 +328,11 @@ public class MainActivity extends Activity {
                 new NodeAction() {
                     @Override
                     public void userDidTalk(String userTalk) {
-                        user.jobTitle = userTalk;
+                        user.currentJob = userTalk;
                     }
                 });
 
         dialog = new DialogTree(jobQuestion);
-
-        System.out.println(dialog.botTalk("some user talk 1"));
-        System.out.println(dialog.botTalk("some user talk 2"));
-        System.out.println(dialog.botTalk("some user talk 3"));
-        System.out.println(dialog.botTalk("some user no yas 6")); // answered yes b/c in the tree it came first
-
-        System.out.println(user.jobTitle);
-        System.out.println(user.education);
     }
 
 	// Fade textView

@@ -16,11 +16,16 @@ public class DialogTree {
         current = null;
     }
 
-    // From userTalk, advance to the next node & return the response of that node.
+    public boolean isAtBeginning() {
+        return current == null;
+    }
+
+    // From userTalk, advance to the next node if possible
+    // & return the response of that node.
     public String botTalk(String userTalk) {
         Node next = nextNode(userTalk);
         if (next == null) {
-            return "END"; // TODO CHANGE this back to null
+            return null; // // "END"  TODO CHANGE this back to null
         }
 
         current = next;
