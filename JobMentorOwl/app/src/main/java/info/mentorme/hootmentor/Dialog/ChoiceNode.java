@@ -33,6 +33,7 @@ public class ChoiceNode implements Node {
         this.action = aAction;
     }
 
+    // Append a child to the children array
     public void addChild(Node child) {
         int oldLength = children == null ? 0 : children.length;
 
@@ -63,17 +64,15 @@ public class ChoiceNode implements Node {
             return null;
         }
 
-        if (children.length == 1 &&
-                (children[0].keywords() == null || children[0].keywords()[0] == "*")) {
-            return children[0];
-        }
-
         for (Node child: children) {
-            for (String key: child.keywords()) {
-                System.out.println("child " + child + " key " + key);
+            // Return child if it doesn't require a keyword.
+            if (child.keywords() == null) {
+                return child;
+            }
 
-                if (key == "*" || userTalk.toLowerCase().contains(key)) {
-                    System.out.println("found key" + key + " " + child.keywords());
+            // Return child if userTalk contains one of the child's keywords.
+            for (String key: child.keywords()) {
+                if (userTalk.toLowerCase().contains(key)) {
                     return child;
                 }
             }

@@ -70,7 +70,6 @@ public class SpeechToTextConvertor {
 
         public void onResults(Bundle results) {
             data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            System.out.println("onResults: " + data.get(0) + "\n");
             handler.onCompletion(true, data.get(0) + "\n");
         }
 
