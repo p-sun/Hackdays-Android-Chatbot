@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import info.mentorme.hootmentor.Dialog.*;
@@ -50,6 +51,8 @@ public class MainActivity extends Activity {
 	private ImageButton owlButton;
     private ImageButton restartButton;
 
+    private ImageView owlUserIsSpeakingView;
+
     boolean isOwlMouthOpen = true;
 
 	@Override
@@ -61,6 +64,7 @@ public class MainActivity extends Activity {
 		userTextView = (TextView) findViewById(R.id.userTextView);
 		owlButton = (ImageButton) findViewById(R.id.owlButton);
         restartButton = (ImageButton) findViewById(R.id.restartButton);
+        owlUserIsSpeakingView = (ImageView) findViewById(R.id.owlUserIsSpeakingImage);
 
 		// hide the action bar
 		getActionBar().hide();
@@ -269,12 +273,13 @@ public class MainActivity extends Activity {
         speechToText = new SpeechToTextConvertor(this, new SpeechToTextHandler() {
             @Override
             public void onStart() {
-                System.out.println("on start");
+                owlButton.setImageResource(R.drawable.owl_listening);
             }
 
             @Override
             public void onVolumeChanged(float volume) {
-                System.out.println("volume changed: " + volume);
+                int visibility = volume > 0 ? View.VISIBLE : View.INVISIBLE;
+                owlUserIsSpeakingView.setVisibility(visibility);
             }
 
             @Override
@@ -284,6 +289,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void onCompletion(boolean success, String userTalk) {
+                owlButton.setImageResource(R.drawable.owl_waiting);
+
                 if (success) {
                     userTextView.setText(userTalk);
                     displayNextNode(userTalk);
