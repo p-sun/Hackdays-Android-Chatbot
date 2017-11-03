@@ -13,12 +13,12 @@ import java.util.Locale;
 public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
     private TextToSpeech tts;
     private String output;
-    private ConversionCompletion completion;
+    private TextToSpeechHandler handler;
 
-    public TextToSpeechConvertor(String aOutput, Context context, ConversionCompletion aCompletion) {
+    public TextToSpeechConvertor(String aOutput, Context context, TextToSpeechHandler aHandler) {
         tts = new TextToSpeech(context, this);
         this.output = aOutput;
-        this.completion = aCompletion;
+        this.handler = aHandler;
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
@@ -42,9 +42,7 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
 
             int result = tts.setLanguage(Locale.US);
-
 //            tts.setPitch(0); // set pitch level
-//
 //             tts.setSpeechRate(1); // set speech speed rate
 
             if (result == TextToSpeech.LANG_MISSING_DATA
@@ -57,17 +55,22 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
         } else {
             Log.e("TTS", "Initialization Failed");
         }
-
     }
 
     UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
-        public void onStart(String utteranceId) { }
+        public void onRangeStart(String utteranceId, int start, int end, int frame) {
+            handler.onRangeStart();
+        }
+
+        @Override
+        public void onStart(String utteranceId) {
+            handler.onStart();
+        }
 
         @Override
         public void onDone(String utteranceId) {
-            completion.onCompletion(true, "");
-            System.out.println("DONE UTTERANCE");
+            handler.onCompletion(true);
         }
 
         @Override

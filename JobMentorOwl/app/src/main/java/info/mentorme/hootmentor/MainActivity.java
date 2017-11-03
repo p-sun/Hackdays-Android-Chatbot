@@ -13,9 +13,10 @@ import android.widget.TextView;
 import info.mentorme.hootmentor.Dialog.*;
 import info.mentorme.hootmentor.Models.User;
 import info.mentorme.hootmentor.Networking.ApiManager;
-import info.mentorme.hootmentor.SpeechConverter.ConversionCompletion;
+import info.mentorme.hootmentor.SpeechConverter.SpeechToTextHandler;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextConvertor;
 import info.mentorme.hootmentor.SpeechConverter.TextToSpeechConvertor;
+import info.mentorme.hootmentor.SpeechConverter.TextToSpeechHandler;
 import info.mentorme.hootmentor.Support.*;
 
 import android.view.animation.AlphaAnimation;
@@ -25,18 +26,8 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
 
-    final User user = new User();
+    static User user = new User();
     DialogTree dialog;
-
-//	private String[] questions = {
-//			"What is your job?",
-////			"What is your level of education?",
-////            "What industry do you work in?",
-////            "How many years of related experience do you have?"
-//	};
-
-	// User's answer to questions[0]
-//	String currentJob = "";
 
 	// Called when an API response returns with a botResponse
 	private void askNextQuestion(String botResponse) {
@@ -54,29 +45,25 @@ public class MainActivity extends Activity {
 	private TextView botTextView;
 	private TextView userTextView;
 
-	private ImageButton micButton;
+	private ImageButton owlButton;
     private ImageButton restartButton;
-	private final int REQ_CODE_SPEECH_INPUT = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		botTextView = (TextView) findViewById(R.id.questionView);
-		userTextView = (TextView) findViewById(R.id.answerView);
-		micButton = (ImageButton) findViewById(R.id.btnSpeak);
-        restartButton = (ImageButton) findViewById(R.id.btnRestart);
+		botTextView = (TextView) findViewById(R.id.botTextView);
+		userTextView = (TextView) findViewById(R.id.userTextView);
+		owlButton = (ImageButton) findViewById(R.id.owlButton);
+        restartButton = (ImageButton) findViewById(R.id.restartButton);
 
 		// hide the action bar
 		getActionBar().hide();
 
-		micButton.setOnClickListener(new View.OnClickListener() {
+		owlButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			    // TODO getUserTalk
-//				displayBotSpeak("");
-
                 if (dialog.isAtBeginning()) {
                     displayNextNode("");
                 } else {
@@ -97,7 +84,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        setupDialogTree();
+        dialog = MaxineDialogTree.setup();
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
 	}
@@ -107,8 +94,7 @@ public class MainActivity extends Activity {
 
     // 1) Bot displays text, and speaks it.
     private void displayBotSpeak(String aBotTalk) {
-//        System.out.println("prompt speech input: " + questionIndex);
-        double seconds = 1.0;//questionIndex == 0 ? 0.0 : 1;
+        double seconds = dialog.isAtBeginning() ? 0.0 : 1;
         final String botTalk = aBotTalk;
 
         Delay.delay(seconds, new Delay.DelayCallback() {
@@ -120,10 +106,10 @@ public class MainActivity extends Activity {
 
                 // Speak question
                 TextToSpeechConvertor conv = new TextToSpeechConvertor(
-                        botTalk, getApplicationContext(), new ConversionCompletion() {
+                        botTalk, getApplicationContext(), new TextToSpeechHandler() {
 
                     @Override
-                    public void onCompletion(boolean success, String result) {
+                    public void onCompletion(boolean success) {
                         if (success) {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -135,7 +121,15 @@ public class MainActivity extends Activity {
                     }
 
                     @Override
-                    public void onPartialResult(String partial) {}
+                    public void onStart() {
+                        System.out.println("on start text to speech");
+                    }
+
+                    @Override
+                    public void onRangeStart() {
+                        System.out.println("on range start text to speech");
+
+                    }
                 });
             }
         });
@@ -189,7 +183,7 @@ public class MainActivity extends Activity {
 //
 //                // Speak question
 //                TextToSpeechConvertor conv = new TextToSpeechConvertor(
-//                        question, getApplicationContext(), new ConversionCompletion() {
+//                        question, getApplicationContext(), new SpeechToTextHandler() {
 //
 //                    @Override
 //                    public void onCompletion(boolean success, String result) {
@@ -222,7 +216,17 @@ public class MainActivity extends Activity {
     //  TODO(2) Get userTalk, find the next node
     // OLD Post TO API from user input.
     private void getUserResponse() {
-        SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new ConversionCompletion() {
+        SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new SpeechToTextHandler() {
+            @Override
+            public void onStart() {
+                System.out.println("on start");
+            }
+
+            @Override
+            public void onVolumeChanged(float volume) {
+                System.out.println("volume changed: " + volume);
+            }
+
             @Override
             public void onPartialResult(String partial) {
                 userTextView.setText(partial);
@@ -292,47 +296,6 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             System.out.println("Error with POST: " + e);
         }
-    }
-
-    void setupDialogTree() {
-        ChoiceNode yes = new ChoiceNode(
-                "Answered yes",
-                null,
-                new String[] {"yes", "yeah", "ok", "yas"},
-                null);
-
-        ChoiceNode no = new ChoiceNode(
-                "Answered not-yes",
-                null,
-                new String[] {"*"}, // Match all keywords
-                null);
-
-        ChoiceNode booleanQuestion = new ChoiceNode(
-                "Pick a boolean, yes or no?",
-                new Node[] {yes, no},
-                null);
-
-        ChoiceNode educationQuestion = new ChoiceNode(
-                "What is your education?",
-                new Node[] { booleanQuestion },
-                new NodeAction() {
-                    @Override
-                    public void userDidTalk(String userTalk) {
-                        user.education = userTalk;
-                    }
-                });
-
-        ChoiceNode jobQuestion = new ChoiceNode(
-                "What is your job?",
-                new Node[] {educationQuestion},
-                new NodeAction() {
-                    @Override
-                    public void userDidTalk(String userTalk) {
-                        user.currentJob = userTalk;
-                    }
-                });
-
-        dialog = new DialogTree(jobQuestion);
     }
 
 	// Fade textView

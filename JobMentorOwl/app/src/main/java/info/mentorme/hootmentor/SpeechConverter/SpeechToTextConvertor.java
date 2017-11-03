@@ -13,10 +13,10 @@ import java.util.Locale;
 
 public class SpeechToTextConvertor {
     private ArrayList data;
-    private ConversionCompletion CompletionConversion;
+    private SpeechToTextHandler handler;
 
-    public SpeechToTextConvertor(Activity appContext, ConversionCompletion conversionCallBack) {
-        this.CompletionConversion = conversionCallBack;
+    public SpeechToTextConvertor(Activity appContext, SpeechToTextHandler conversionCallBack) {
+        this.handler = conversionCallBack;
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -38,7 +38,7 @@ public class SpeechToTextConvertor {
         private static final String TAG = "RecognitionListener";
 
         public void onReadyForSpeech(Bundle params) {
-//            Log.d(TAG, "onReadyForSpeech");
+            handler.onStart();
         }
 
         public void onBeginningOfSpeech() {
@@ -47,6 +47,7 @@ public class SpeechToTextConvertor {
 
         public void onRmsChanged(float rmsdB) {
 //            Log.d(TAG, "onRmsChanged");
+            handler.onVolumeChanged(rmsdB);
         }
 
         public void onBufferReceived(byte[] buffer) {
@@ -59,19 +60,19 @@ public class SpeechToTextConvertor {
 
         public void onError(int error) {
             Log.e(TAG, "error " + error);
-            CompletionConversion.onCompletion(false, "");
+            handler.onCompletion(false, "");
         }
 
         public void onResults(Bundle results) {
             data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             System.out.println("onResults: " + data.get(0) + "\n");
-            CompletionConversion.onCompletion(true, data.get(0) + "\n");
+            handler.onCompletion(true, data.get(0) + "\n");
         }
 
         public void onPartialResults(Bundle partialResults) {
             data = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             String partial = data.get(0) + "\n";
-            CompletionConversion.onPartialResult(partial);
+            handler.onPartialResult(partial);
         }
 
         public void onEvent(int eventType, Bundle params) {

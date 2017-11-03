@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <ImageButton
-        android:id="@+id/btnRestart"
+        android:id="@+id/restartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -16,57 +16,57 @@
         android:layout_marginRight="20dp"
         android:src="@drawable/restart" />
 
-    <TextView
-        android:id="@+id/questionView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textSize="34dp"
-        android:textStyle="italic"
-        android:gravity="center" />
-
-    <TextView
-        android:id="@+id/answerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="360dp"
-        android:padding="10dp"
-        android:textColor="@color/answerColor"
-        android:textSize="30dp"
-        android:textStyle="normal"
-        android:gravity="center" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/btnSpeak"
+            android:id="@+id/owlButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
+            android:layout_marginTop="30dp"
             android:background="@null"
-            android:src="@drawable/ico_mic" />
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            android:src="@drawable/owl_waiting" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="@string/tap_on_mic"
             android:textColor="@color/white"
             android:textSize="15dp"
             android:textStyle="normal" />
 
+        <TextView
+            android:id="@+id/botTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="36dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/userTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColor="@color/answerColor"
+            android:textSize="33dp"
+            android:textStyle="normal" />
 
     </LinearLayout>
 
