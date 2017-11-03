@@ -27,6 +27,10 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
         tts.speak(output, TextToSpeech.QUEUE_FLUSH, map);
     }
 
+    public void stop() {
+        tts.stop();
+    }
+
     public void destroy() {
         if (tts != null) {
             tts.stop();

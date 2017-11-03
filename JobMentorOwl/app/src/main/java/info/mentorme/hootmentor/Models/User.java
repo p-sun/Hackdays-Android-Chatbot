@@ -5,6 +5,7 @@ package info.mentorme.hootmentor.Models;
  */
 
 public class User {
+    public String name;
     public String currentJob;
     public String education;
 }

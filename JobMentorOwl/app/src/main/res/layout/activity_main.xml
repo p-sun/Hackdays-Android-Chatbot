@@ -57,37 +57,47 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/tap_on_mic"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:textStyle="normal" />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:text="@string/tap_on_mic"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="15dp"-->
+            <!--android:textStyle="normal" />-->
 
         <TextView
             android:id="@+id/botTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="36dp"
+
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="24dp"
+            android:autoSizeMaxTextSize="36dp"
+            android:autoSizeStepGranularity="2sp"
+
             android:textStyle="italic" />
 
         <TextView
             android:id="@+id/userTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:textColor="@color/answerColor"
-            android:textSize="33dp"
+
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="22dp"
+            android:autoSizeMaxTextSize="33dp"
+            android:autoSizeStepGranularity="2sp"
+
             android:textStyle="normal" />
 
     </LinearLayout>

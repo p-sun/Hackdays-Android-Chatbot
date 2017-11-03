@@ -72,6 +72,8 @@ public class MainActivity extends Activity {
 		owlButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+			    textToSpeech.stop();
+
                 if (dialog.isAtBeginning()) {
                     displayNextNode("");
                 } else {
