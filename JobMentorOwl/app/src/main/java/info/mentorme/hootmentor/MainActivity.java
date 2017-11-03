@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 
     static User user = new User();
     DialogTree dialog;
+    TextToSpeechConvertor textToSpeech;
 
 	// Called when an API response returns with a botResponse
 	private void askNextQuestion(String botResponse) {
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
         dialog = MaxineDialogTree.setup();
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
+        setupTextToSpeech();
 	}
 
     ArrayList<JobRecommendation> jobs = new ArrayList<JobRecommendation>();
@@ -107,41 +109,8 @@ public class MainActivity extends Activity {
                 botTextView.setText(botTalk);
                 userTextView.setText("");
 
-                final boolean[] isOwlMouthOpen = {true};
-
                 // Speak question
-                TextToSpeechConvertor conv = new TextToSpeechConvertor(
-                        botTalk, getApplicationContext(), new TextToSpeechHandler() {
-
-                    @Override
-                    public void onCompletion(boolean success) {
-                        owlButton.setImageResource(R.drawable.owl_waiting);
-
-                        if (success) {
-                            MainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getUserResponse();
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onStart() {
-                        owlButton.setImageResource(R.drawable.owl_talking);
-                    }
-
-                    @Override
-                    public void onRangeStart() {
-                        if (isOwlMouthOpen[0]) {
-                            owlButton.setImageResource(R.drawable.owl_waiting);
-                        } else {
-                            owlButton.setImageResource(R.drawable.owl_talking);
-                        }
-                        isOwlMouthOpen[0] = !isOwlMouthOpen[0];
-                    }
-                });
+                textToSpeech.speakOut(botTalk);
             }
         });
     }
@@ -307,6 +276,41 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             System.out.println("Error with POST: " + e);
         }
+    }
+
+    private void setupTextToSpeech() {
+        textToSpeech = new TextToSpeechConvertor(
+                getApplicationContext(), new TextToSpeechHandler() {
+
+            @Override
+            public void onCompletion(boolean success) {
+                owlButton.setImageResource(R.drawable.owl_waiting);
+
+                if (success) {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getUserResponse();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onStart() {
+                owlButton.setImageResource(R.drawable.owl_talking);
+            }
+
+            @Override
+            public void onRangeStart() {
+                if (isOwlMouthOpen) {
+                    owlButton.setImageResource(R.drawable.owl_waiting);
+                } else {
+                    owlButton.setImageResource(R.drawable.owl_talking);
+                }
+                isOwlMouthOpen = !isOwlMouthOpen;
+            }
+        });
     }
 
 	// Fade textView

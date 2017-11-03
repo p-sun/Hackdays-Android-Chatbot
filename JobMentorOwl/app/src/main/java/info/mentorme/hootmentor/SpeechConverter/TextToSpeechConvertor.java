@@ -12,17 +12,15 @@ import java.util.Locale;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
     private TextToSpeech tts;
-    private String output;
     private TextToSpeechHandler handler;
 
-    public TextToSpeechConvertor(String aOutput, Context context, TextToSpeechHandler aHandler) {
+    public TextToSpeechConvertor(Context context, TextToSpeechHandler aHandler) {
         tts = new TextToSpeech(context, this);
-        this.output = aOutput;
         this.handler = aHandler;
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    private void speakOut() {
+    public void speakOut(String output) {
         tts.setOnUtteranceProgressListener(utteranceListener);
         HashMap<String, String> map = new HashMap<String, String>();
         map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "UniqueID");
@@ -40,7 +38,6 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
     @Override
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
-
             int result = tts.setLanguage(Locale.US);
 //            tts.setPitch(0); // set pitch level
 //             tts.setSpeechRate(1); // set speech speed rate
@@ -48,10 +45,7 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
             if (result == TextToSpeech.LANG_MISSING_DATA
                     || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e("TTS", "Language is not supported");
-            } else {
-                speakOut();
             }
-
         } else {
             Log.e("TTS", "Initialization Failed");
         }
