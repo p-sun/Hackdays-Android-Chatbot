@@ -25,7 +25,7 @@ public class DialogTree {
     public String botTalk(String userTalk) {
         Node next = nextNode(userTalk);
         if (next == null) {
-            return null; // // "END"  TODO CHANGE this back to null
+            return null;
         }
 
         current = next;

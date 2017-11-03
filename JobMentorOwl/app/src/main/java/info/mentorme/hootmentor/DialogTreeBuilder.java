@@ -5,11 +5,22 @@ import info.mentorme.hootmentor.Dialog.DialogTree;
 import info.mentorme.hootmentor.Dialog.Node;
 import info.mentorme.hootmentor.Dialog.NodeAction;
 
-/**
- * Created by psun on 2017-11-03.
- */
-
 public class DialogTreeBuilder {
+    public static DialogTree apiConnectedTree() {
+
+        ChoiceNode job = new ChoiceNode(
+                "Hoot Hoot! What is your job?",
+                null,
+                new NodeAction() {
+                    @Override
+                    public void userDidTalk(String userTalk) {
+                        MainActivity.user.currentJob = userTalk;
+                    }
+                });
+
+        return new DialogTree(job);
+    }
+
     public static DialogTree maxineTree() {
         ChoiceNode outlook = new ChoiceNode(
                 "Hoot Hoot! In the city of Ottawa, there will be good " +
@@ -22,7 +33,7 @@ public class DialogTreeBuilder {
         ChoiceNode salary = new ChoiceNode(
                 "The average earnings in Ottawa is around 24000 dollars a year, which is 12 dollars per hour.",
                 new Node[] {outlook},
-                new String[] {"salary", "earn", "make"});
+                new String[] {"salary", " earn"});
         outlook.addChild(salary);
 
         ChoiceNode photography = new ChoiceNode(
@@ -54,7 +65,7 @@ public class DialogTreeBuilder {
                     }
                 });
 
-        return new DialogTree(name);
+        return new DialogTree(outlook);
     }
 
     public static DialogTree sampleTree() {
@@ -65,8 +76,7 @@ public class DialogTreeBuilder {
 
         ChoiceNode no = new ChoiceNode(
                 "Answered not-yes",
-                null,
-                new String[] {"*"}); // Match all keywords
+                null); // Match all keywords
 
         ChoiceNode booleanQuestion = new ChoiceNode(
                 "Pick a boolean, yes or no?",
