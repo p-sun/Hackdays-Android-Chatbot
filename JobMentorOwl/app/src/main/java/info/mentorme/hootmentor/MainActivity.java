@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        dialog = MaxineDialogTree.setup();
+        dialog = DialogTreeBuilder.sampleTree();
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
         setupTextToSpeech();

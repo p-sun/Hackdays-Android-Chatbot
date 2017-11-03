@@ -9,8 +9,8 @@ import info.mentorme.hootmentor.Dialog.NodeAction;
  * Created by psun on 2017-11-03.
  */
 
-public class MaxineDialogTree {
-    public static DialogTree setup() {
+public class DialogTreeBuilder {
+    public static DialogTree sampleTree() {
         ChoiceNode yes = new ChoiceNode(
                 "Answered yes",
                 null,
