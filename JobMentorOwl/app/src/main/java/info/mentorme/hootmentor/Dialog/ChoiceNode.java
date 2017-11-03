@@ -10,11 +10,19 @@ public class ChoiceNode implements Node {
     private Node[] children;
     private NodeAction action;
 
+    public ChoiceNode(String aBotTalk, Node[] someChildren) {
+        setup(aBotTalk, someChildren, null, null);
+    }
+
     public ChoiceNode(String aBotTalk, Node[] someChildren, NodeAction aAction) {
         setup(aBotTalk, someChildren, null, aAction);
     }
 
-    public ChoiceNode(String aBotTalk, ChoiceNode[] someChildren, String[] someKeywords,  NodeAction aAction) {
+    public ChoiceNode(String aBotTalk, Node[] someChildren, String[] someKeywords) {
+        setup(aBotTalk, someChildren, someKeywords, null);
+    }
+
+    public ChoiceNode(String aBotTalk, Node[] someChildren, String[] someKeywords,  NodeAction aAction) {
         setup(aBotTalk, someChildren, someKeywords, aAction);
     }
 
@@ -23,6 +31,18 @@ public class ChoiceNode implements Node {
         this.children = someChildren;
         this.keywords = someKeywords;
         this.action = aAction;
+    }
+
+    public void addChild(Node child) {
+        int oldLength = children == null ? 0 : children.length;
+
+        Node[] newChildren = new Node[oldLength + 1];
+        for (int i = 0; i < oldLength; i++) {
+            newChildren[i] = children[i];
+        }
+        newChildren[oldLength] = child;
+
+        children = newChildren;
     }
 
     public String[] keywords() {
@@ -43,7 +63,8 @@ public class ChoiceNode implements Node {
             return null;
         }
 
-        if (children.length == 1) {
+        if (children.length == 1 &&
+                (children[0].keywords() == null || children[0].keywords()[0] == "*")) {
             return children[0];
         }
 
@@ -51,13 +72,13 @@ public class ChoiceNode implements Node {
             for (String key: child.keywords()) {
                 System.out.println("child " + child + " key " + key);
 
-                if (key == "*" || userTalk.contains(key)) {
+                if (key == "*" || userTalk.toLowerCase().contains(key)) {
                     System.out.println("found key" + key + " " + child.keywords());
                     return child;
                 }
             }
         }
 
-        return null; // TODO return first child if no keywords match???? OR deal with the error?
+        return null;
     }
 }
