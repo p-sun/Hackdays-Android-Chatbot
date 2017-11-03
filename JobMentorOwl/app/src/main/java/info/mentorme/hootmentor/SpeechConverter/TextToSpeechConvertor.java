@@ -28,7 +28,6 @@ public class TextToSpeechConvertor implements  TextToSpeech.OnInitListener {
     }
 
     public void destroy() {
-        // Don't forget to shutdown!
         if (tts != null) {
             tts.stop();
             tts.shutdown();

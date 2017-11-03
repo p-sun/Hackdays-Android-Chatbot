@@ -14,11 +14,13 @@ import java.util.Locale;
 public class SpeechToTextConvertor {
     private ArrayList data;
     private SpeechToTextHandler handler;
+    private Intent intent;
+    private SpeechRecognizer sr;
 
     public SpeechToTextConvertor(Activity appContext, SpeechToTextHandler conversionCallBack) {
         this.handler = conversionCallBack;
 
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -27,10 +29,13 @@ public class SpeechToTextConvertor {
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 appContext.getPackageName());
 
-        //Listen to intent
+        // Setup Recognition Listener
         CustomRecognitionListener listener = new CustomRecognitionListener();
-        SpeechRecognizer sr = SpeechRecognizer.createSpeechRecognizer(appContext);
+        sr = SpeechRecognizer.createSpeechRecognizer(appContext);
         sr.setRecognitionListener(listener);
+    }
+
+    public void startListening() {
         sr.startListening(intent);
     }
 

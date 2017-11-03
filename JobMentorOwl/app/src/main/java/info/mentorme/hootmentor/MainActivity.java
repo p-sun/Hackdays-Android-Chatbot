@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     static User user = new User();
     DialogTree dialog;
     TextToSpeechConvertor textToSpeech;
+    SpeechToTextConvertor speechToText;
 
 	// Called when an API response returns with a botResponse
 	private void askNextQuestion(String botResponse) {
@@ -70,7 +71,7 @@ public class MainActivity extends Activity {
                 if (dialog.isAtBeginning()) {
                     displayNextNode("");
                 } else {
-                    getUserResponse();
+                    speechToText.startListening();
                 }
 			}
 		});
@@ -91,6 +92,7 @@ public class MainActivity extends Activity {
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
         setupTextToSpeech();
+        setupSpeechToText();
 	}
 
     ArrayList<JobRecommendation> jobs = new ArrayList<JobRecommendation>();
@@ -193,56 +195,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    //  TODO(2) Get userTalk, find the next node
-    // OLD Post TO API from user input.
-    private void getUserResponse() {
-        SpeechToTextConvertor speechConverter = new SpeechToTextConvertor(this, new SpeechToTextHandler() {
-            @Override
-            public void onStart() {
-                System.out.println("on start");
-            }
-
-            @Override
-            public void onVolumeChanged(float volume) {
-                System.out.println("volume changed: " + volume);
-            }
-
-            @Override
-            public void onPartialResult(String partial) {
-                userTextView.setText(partial);
-            }
-
-            @Override
-            public void onCompletion(boolean success, String userTalk) {
-                if (success) {
-                    userTextView.setText(userTalk);
-                    displayNextNode(userTalk);
-
-//                    if (questionIndex < questions.length - 1) { // 3
-//                        if (questionIndex == 0) {
-//                            currentJob = result;
-//                        }
-//                        askNextQuestion("");
-//                    } else if (questionIndex == questions.length - 1) { // 4
-//                        postToAPI(ApiManager.Endpoint.AUTOMATION_PERCENTAGE, currentJob);
-//                    } else if (questionIndex == questions.length && !result.contains("chat")) { // 5
-//                        System.out.println("calling JOB recommender");
-//                        if (jobs.isEmpty()) {
-//                            postToAPI(ApiManager.Endpoint.JOB_RECOMMENDER, currentJob);
-//                        } else {
-//                            // No API needed, b/c we already searched the recs for that job!
-//                            displayBotSpeak("");
-//                        }
-//                    } else { // 6+
-//                        System.out.println("Question index @ for chatbox " + questionIndex);
-//                        questionIndex = questions.length + 2;
-//                        postToAPI(ApiManager.Endpoint.CHAT_BOT, result);
-//                    }
-                }
-            }
-        });
-    }
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -290,7 +242,7 @@ public class MainActivity extends Activity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            getUserResponse();
+                            speechToText.startListening();
                         }
                     });
                 }
@@ -309,6 +261,54 @@ public class MainActivity extends Activity {
                     owlButton.setImageResource(R.drawable.owl_talking);
                 }
                 isOwlMouthOpen = !isOwlMouthOpen;
+            }
+        });
+    }
+
+    private void setupSpeechToText() {
+        speechToText = new SpeechToTextConvertor(this, new SpeechToTextHandler() {
+            @Override
+            public void onStart() {
+                System.out.println("on start");
+            }
+
+            @Override
+            public void onVolumeChanged(float volume) {
+                System.out.println("volume changed: " + volume);
+            }
+
+            @Override
+            public void onPartialResult(String partial) {
+                userTextView.setText(partial);
+            }
+
+            @Override
+            public void onCompletion(boolean success, String userTalk) {
+                if (success) {
+                    userTextView.setText(userTalk);
+                    displayNextNode(userTalk);
+
+//                    if (questionIndex < questions.length - 1) { // 3
+//                        if (questionIndex == 0) {
+//                            currentJob = result;
+//                        }
+//                        askNextQuestion("");
+//                    } else if (questionIndex == questions.length - 1) { // 4
+//                        postToAPI(ApiManager.Endpoint.AUTOMATION_PERCENTAGE, currentJob);
+//                    } else if (questionIndex == questions.length && !result.contains("chat")) { // 5
+//                        System.out.println("calling JOB recommender");
+//                        if (jobs.isEmpty()) {
+//                            postToAPI(ApiManager.Endpoint.JOB_RECOMMENDER, currentJob);
+//                        } else {
+//                            // No API needed, b/c we already searched the recs for that job!
+//                            displayBotSpeak("");
+//                        }
+//                    } else { // 6+
+//                        System.out.println("Question index @ for chatbox " + questionIndex);
+//                        questionIndex = questions.length + 2;
+//                        postToAPI(ApiManager.Endpoint.CHAT_BOT, result);
+//                    }
+                }
             }
         });
     }
