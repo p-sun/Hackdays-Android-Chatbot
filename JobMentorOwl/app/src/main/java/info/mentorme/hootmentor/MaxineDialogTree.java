@@ -39,7 +39,7 @@ public class MaxineDialogTree {
                 });
 
         ChoiceNode jobQuestion = new ChoiceNode(
-                "What is your job?",
+                "What is your job? What is your job? What is your job?",
                 new Node[] {educationQuestion},
                 new NodeAction() {
                     @Override

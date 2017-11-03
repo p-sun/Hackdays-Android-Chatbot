@@ -48,6 +48,8 @@ public class MainActivity extends Activity {
 	private ImageButton owlButton;
     private ImageButton restartButton;
 
+    boolean isOwlMouthOpen = true;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +99,7 @@ public class MainActivity extends Activity {
         double seconds = dialog.isAtBeginning() ? 0.0 : 1;
         final String botTalk = aBotTalk;
 
+
         Delay.delay(seconds, new Delay.DelayCallback() {
             @Override
             public void afterDelay() {
@@ -104,12 +107,16 @@ public class MainActivity extends Activity {
                 botTextView.setText(botTalk);
                 userTextView.setText("");
 
+                final boolean[] isOwlMouthOpen = {true};
+
                 // Speak question
                 TextToSpeechConvertor conv = new TextToSpeechConvertor(
                         botTalk, getApplicationContext(), new TextToSpeechHandler() {
 
                     @Override
                     public void onCompletion(boolean success) {
+                        owlButton.setImageResource(R.drawable.owl_waiting);
+
                         if (success) {
                             MainActivity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -122,13 +129,17 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onStart() {
-                        System.out.println("on start text to speech");
+                        owlButton.setImageResource(R.drawable.owl_talking);
                     }
 
                     @Override
                     public void onRangeStart() {
-                        System.out.println("on range start text to speech");
-
+                        if (isOwlMouthOpen[0]) {
+                            owlButton.setImageResource(R.drawable.owl_waiting);
+                        } else {
+                            owlButton.setImageResource(R.drawable.owl_talking);
+                        }
+                        isOwlMouthOpen[0] = !isOwlMouthOpen[0];
                     }
                 });
             }
