@@ -3,6 +3,9 @@
     <color name="white">#ffffff</color>
     <color name="answerColor">#E0E0E0</color>
 
-    <color name="bg_gradient_start">#138584</color>
-    <color name="bg_gradient_end">#89F9B9</color>
+    <!--<color name="bg_gradient_start">#138584</color>-->
+    <!--<color name="bg_gradient_end">#89F9B9</color>-->
+
+    <color name="bg_gradient_start">#3829be</color>
+    <color name="bg_gradient_end">#baf5eb</color>
 </resources>

@@ -21,26 +21,26 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+
         android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+
+        android:gravity="top|center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
-        android:gravity="top|center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="210dp"
+            android:layout_height="170dp" >
 
             <ImageButton
                 android:id="@+id/owlButton"
                 android:layout_width="wrap_content"
-                android:layout_height="160dp"
-                android:layout_marginLeft="90dp"
-                android:layout_marginRight="90dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
                 android:background="@null"
-                android:cropToPadding="false"
                 android:scaleType="fitCenter"
                 android:src="@drawable/owl_waiting" />
 
@@ -48,12 +48,13 @@
                 android:id="@+id/owlUserIsSpeakingImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/owlButton"
                 android:layout_alignBottom="@id/owlButton"
                 android:layout_alignLeft="@id/owlButton"
                 android:layout_alignRight="@id/owlButton"
-                android:visibility="invisible"
-                android:src="@drawable/owl_listening_user_speaking" />
+                android:layout_alignTop="@id/owlButton"
+                android:scaleType="fitCenter"
+                android:src="@drawable/owl_listening_user_speaking"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -69,27 +70,30 @@
         <TextView
             android:id="@+id/botTextView"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="0dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:autoSizeMaxTextSize="36dp"
+            android:autoSizeMinTextSize="24dp"
+
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:gravity="center"
             android:textColor="@color/white"
 
-            android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="24dp"
-            android:autoSizeMaxTextSize="36dp"
-            android:autoSizeStepGranularity="2sp"
+            android:layout_weight="2"
 
             android:textStyle="italic" />
 
         <TextView
             android:id="@+id/userTextView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+
             android:gravity="center"
             android:textColor="@color/answerColor"
 
@@ -97,6 +101,8 @@
             android:autoSizeMinTextSize="22dp"
             android:autoSizeMaxTextSize="33dp"
             android:autoSizeStepGranularity="2sp"
+
+            android:layout_weight="1"
 
             android:textStyle="normal" />
 
