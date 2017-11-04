@@ -40,8 +40,7 @@ public class MainActivity extends Activity {
 //            questionIndex++;
 //            // Don't increment
 //        }
-//
-//
+
 //        displayBotSpeak(botResponse);
 	}
 
@@ -85,16 +84,19 @@ public class MainActivity extends Activity {
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                botTextView.setText("");
+                userTextView.setText("");
+
+                textToSpeech.stop();
+
                 // Reset & ask the first question!
                 dialog.reset();
                 recommendationIndex = 0;
                 jobs = new ArrayList<JobRecommendation>();
-
-                displayNextNode("");
             }
         });
 
-        //dialog = DialogTreeBuilder.maxineTree();
+//        dialog = DialogTreeBuilder.maxineTree();
         dialog = DialogTreeBuilder.apiConnectedTree();
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
@@ -107,23 +109,33 @@ public class MainActivity extends Activity {
 
     // 1) Bot displays text, and speaks it.
     private void displayBotSpeak(String aBotTalk) {
-        double seconds = dialog.isAtBeginning() ? 0.0 : 1;
+        final double seconds = dialog.isAtBeginning() ? 0.0 : 1;
         final String botTalk = aBotTalk;
 
-
-        Delay.delay(seconds, new Delay.DelayCallback() {
+        // TODO Make Delay an Async Task
+        // If we remove runOnUiThread, we'll get "Can't create handler inside thread that has not called Looper.prepare()"
+        MainActivity.this.runOnUiThread(new Runnable() {
             @Override
-            public void afterDelay() {
-                // Set text
-                botTextView.setText(botTalk);
-                userTextView.setText("");
+            public void run() {
 
-                // Speak question
-                textToSpeech.speakOut(botTalk);
+                Delay.delay(seconds, new Delay.DelayCallback() {
+                    @Override
+                    public void afterDelay() {
+                        // Set text
+                        botTextView.setText(botTalk);
+                        userTextView.setText("");
+
+                        // Speak question
+                        textToSpeech.speakOut(botTalk);
+                    }
+                });
+
             }
         });
-    }
 
+
+
+    }
 
 //    // 1) Bot displays text, and speaks it.
 //    private void displayBotSpeak(String aBotTalk) {
@@ -139,9 +151,6 @@ public class MainActivity extends Activity {
 ////                }
 //
 //                // Get current question
-//
-//
-//
 ////                String question = "";
 ////                if (questionIndex < questions.length) { // 0...3  ignore answers
 ////                    question = currentQuestion();
@@ -196,10 +205,16 @@ public class MainActivity extends Activity {
 
     // Once we have the userTalk, go to next Node, and display the botTalk
     private void displayNextNode(String userTalk) {
-        String botTalk = dialog.botTalk(userTalk);
-        if (botTalk != null && botTalk != "") {
-            displayBotSpeak(botTalk);
-        }
+
+        dialog.botTalk(userTalk, new BotTalkHandler() {
+            @Override
+            public void botDidTalk(String botTalk) {
+
+                if (botTalk != null && botTalk != "") {
+                    displayBotSpeak(botTalk);
+                }
+            }
+        });
     }
 
 	@Override
@@ -208,34 +223,6 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
-	private void postToAPI(ApiManager.Endpoint apiType, String userInput) {
-        // Send it via the apiManager
-        ApiManager apiManager = new ApiManager();
-        try {
-            apiManager.sendPost(apiType, userInput, new ApiManager.DidFinishPostHandler(){
-                @Override
-                public void handle(boolean success, String response) {
-                    if (success) {
-                        final String finalResponse = response;
-
-                        System.out.println("API Response" + finalResponse);
-
-                        // Update question view
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // TODO
-//                                askNextQuestion(finalResponse);
-                            }
-                        });
-                    }
-                }
-            });
-        } catch (Exception e) {
-            System.out.println("Error with POST: " + e);
-        }
-    }
 
     private void setupTextToSpeech() {
         textToSpeech = new TextToSpeechConvertor(

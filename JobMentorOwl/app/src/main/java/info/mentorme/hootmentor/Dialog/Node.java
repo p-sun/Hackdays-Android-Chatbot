@@ -9,7 +9,7 @@ public interface Node {
     String[] keywords();
 
     // After userTalk1, this node returns its response
-    String botTalk(String userTalk);
+    void botTalk(String userTalk, BotTalkHandler handler);
 
     // After userTalk2, this node returns the next node
     Node next(String userTalk);

@@ -20,9 +20,7 @@ public class ApiManager {
             case ECHO:
                 return "/echo";
             case CHAT_BOT:
-                return "/nocRisk";
-//                return "/findSimilar";
-//                return "/chatbot";
+                return "/chatbot";
             case JOB_RECOMMENDER:
                 return "/job_recommender";
             case FIND_SIMILAR:
@@ -34,7 +32,7 @@ public class ApiManager {
     }
 
     // HTTP POST request
-    public void sendPost(Endpoint endpoint, String userResponse, DidFinishPostHandler completion) throws Exception {
+    public void post(Endpoint endpoint, String userResponse, DidFinishPostHandler completion) throws Exception {
         String link = linkForEndpoint(endpoint);
         URL url = new URL("https://hoot-mentor.appspot.com/_ah/api/jobSearch/v1/jobSearch" + link);
 

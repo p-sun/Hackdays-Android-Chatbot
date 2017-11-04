@@ -50,12 +50,12 @@ public class ChoiceNode implements Node {
         return keywords;
     }
 
-    public String botTalk(String userTalk) {
+    public void botTalk(String userTalk, BotTalkHandler handler) {
         if (action != null) {
             this.action.userDidTalk(userTalk);
         }
 
-        return botTalk;
+        handler.botDidTalk(botTalk);
     }
 
     // Return the NEXT child

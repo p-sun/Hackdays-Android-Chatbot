@@ -1,5 +1,6 @@
 package info.mentorme.hootmentor;
 
+import info.mentorme.hootmentor.Dialog.ApiEchoNode;
 import info.mentorme.hootmentor.Dialog.ChoiceNode;
 import info.mentorme.hootmentor.Dialog.DialogTree;
 import info.mentorme.hootmentor.Dialog.Node;
@@ -8,9 +9,11 @@ import info.mentorme.hootmentor.Dialog.NodeAction;
 public class DialogTreeBuilder {
     public static DialogTree apiConnectedTree() {
 
+        ApiEchoNode echo = new ApiEchoNode(null);
+
         ChoiceNode job = new ChoiceNode(
                 "Hoot Hoot! What is your job?",
-                null,
+                new Node[] {echo},
                 new NodeAction() {
                     @Override
                     public void userDidTalk(String userTalk) {
@@ -65,7 +68,7 @@ public class DialogTreeBuilder {
                     }
                 });
 
-        return new DialogTree(outlook);
+        return new DialogTree(name);
     }
 
     public static DialogTree sampleTree() {

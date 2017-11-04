@@ -22,14 +22,16 @@ public class DialogTree {
 
     // From userTalk, advance to the next node if possible
     // & return the response of that node.
-    public String botTalk(String userTalk) {
+    public void botTalk(String userTalk, BotTalkHandler handler) {
         Node next = nextNode(userTalk);
         if (next == null) {
-            return null;
+            handler.botDidTalk(null);
         }
 
         current = next;
-        return current.botTalk(userTalk);
+        if (current != null) {
+            current.botTalk(userTalk, handler);
+        }
     }
 
     private Node nextNode(String userTalk) {
