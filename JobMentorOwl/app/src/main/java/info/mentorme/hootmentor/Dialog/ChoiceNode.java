@@ -1,13 +1,15 @@
 package info.mentorme.hootmentor.Dialog;
 
+import info.mentorme.hootmentor.Dialog.NodeSupport.*;
+import info.mentorme.hootmentor.Dialog.Tree.BotTalkHandler;
+
 /**
  * Created by psun on 2017-11-02.
  */
 
-public class ChoiceNode implements Node {
-    private String[] keywords;
+public class ChoiceNode extends AbstractNode {
     private String botTalk;
-    private Node[] children;
+
     private NodeAction action;
 
     public ChoiceNode(String aBotTalk, Node[] someChildren) {
@@ -33,51 +35,11 @@ public class ChoiceNode implements Node {
         this.action = aAction;
     }
 
-    // Append a child to the children array
-    public void addChild(Node child) {
-        int oldLength = children == null ? 0 : children.length;
-
-        Node[] newChildren = new Node[oldLength + 1];
-        for (int i = 0; i < oldLength; i++) {
-            newChildren[i] = children[i];
-        }
-        newChildren[oldLength] = child;
-
-        children = newChildren;
-    }
-
-    public String[] keywords() {
-        return keywords;
-    }
-
     public void botTalk(String userTalk, BotTalkHandler handler) {
         if (action != null) {
             this.action.userDidTalk(userTalk);
         }
 
         handler.botDidTalk(botTalk);
-    }
-
-    // Return the NEXT child
-    public Node next(String userTalk) {
-        if (children == null || children.length == 0) {
-            return null;
-        }
-
-        for (Node child: children) {
-            // Return child if it doesn't require a keyword.
-            if (child.keywords() == null) {
-                return child;
-            }
-
-            // Return child if userTalk contains one of the child's keywords.
-            for (String key: child.keywords()) {
-                if (userTalk.toLowerCase().contains(key)) {
-                    return child;
-                }
-            }
-        }
-
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-package info.mentorme.hootmentor.Dialog;
+package info.mentorme.hootmentor.Dialog.Tree;
 
 /**
  * Created by psun on 2017-11-04.

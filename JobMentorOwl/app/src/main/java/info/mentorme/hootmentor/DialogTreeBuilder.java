@@ -2,9 +2,8 @@ package info.mentorme.hootmentor;
 
 import info.mentorme.hootmentor.Dialog.ApiEchoNode;
 import info.mentorme.hootmentor.Dialog.ChoiceNode;
-import info.mentorme.hootmentor.Dialog.DialogTree;
-import info.mentorme.hootmentor.Dialog.Node;
-import info.mentorme.hootmentor.Dialog.NodeAction;
+import info.mentorme.hootmentor.Dialog.Tree.DialogTree;
+import info.mentorme.hootmentor.Dialog.NodeSupport.*;
 
 public class DialogTreeBuilder {
     public static DialogTree apiConnectedTree() {

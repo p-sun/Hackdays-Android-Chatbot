@@ -2,32 +2,25 @@ package info.mentorme.hootmentor.Dialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import info.mentorme.hootmentor.Dialog.NodeSupport.AbstractNode;
+import info.mentorme.hootmentor.Dialog.NodeSupport.Node;
+import info.mentorme.hootmentor.Dialog.Tree.BotTalkHandler;
 import info.mentorme.hootmentor.Networking.ApiManager;
 
 /**
  * Created by psun on 2017-11-03.
  */
 
-public class ApiEchoNode implements Node {
-    private Node child;
+public class ApiEchoNode extends AbstractNode {
 
     public ApiEchoNode(Node aChild) {
-        this.child = aChild;
-    }
-
-    // If userTalk contains this keyword, this will be the next node
-    public String[] keywords() {
-        return null;
+        this.addChild(aChild);
     }
 
     // After userTalk1, this node returns its response
     public void botTalk(String userTalk, BotTalkHandler handler) {
         postToAPI(userTalk, handler);
-    }
-
-    // After userTalk2, this node returns the next node
-    public Node next(String userTalk) {
-        return child;
     }
 
     private void postToAPI(String userInput, final BotTalkHandler handler) {

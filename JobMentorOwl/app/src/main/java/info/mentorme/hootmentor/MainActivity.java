@@ -11,9 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import info.mentorme.hootmentor.Dialog.*;
+import info.mentorme.hootmentor.Dialog.Tree.BotTalkHandler;
+import info.mentorme.hootmentor.Dialog.Tree.DialogTree;
 import info.mentorme.hootmentor.Models.User;
-import info.mentorme.hootmentor.Networking.ApiManager;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextHandler;
 import info.mentorme.hootmentor.SpeechConverter.SpeechToTextConvertor;
 import info.mentorme.hootmentor.SpeechConverter.TextToSpeechConvertor;
