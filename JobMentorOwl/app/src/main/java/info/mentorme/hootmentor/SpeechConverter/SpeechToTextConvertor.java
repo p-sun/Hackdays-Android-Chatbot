@@ -39,6 +39,8 @@ public class SpeechToTextConvertor {
         sr.startListening(intent);
     }
 
+    public void stopListening() { sr.stopListening(); }
+
     class CustomRecognitionListener implements RecognitionListener {
         private static final String TAG = "RecognitionListener";
 

@@ -12,27 +12,39 @@ public class ApiManager {
     }
 
     public enum Endpoint {
-        ECHO, CHAT_BOT, JOB_RECOMMENDER, FIND_SIMILAR, AUTOMATION_PERCENTAGE
+        ECHO, FIND_SIMILAR, NOC_RISK, MARKET_REPORT, NOC_TO_TITLE
     }
 
-    private String linkForEndpoint(Endpoint endpoint) {
+    private static String linkForEndpoint(Endpoint endpoint) {
         switch (endpoint) {
+            // Requires {'content': 'anything'}; returns {'content': 'anything'}
             case ECHO:
                 return "/echo";
-            case CHAT_BOT:
-                return "/chatbot";
-            case JOB_RECOMMENDER:
-                return "/job_recommender";
+
+            // Requires {'content': 'job title'}; returns {'content': "['list', 'jobs']"}
             case FIND_SIMILAR:
                 return "/findSimilar";
-            case AUTOMATION_PERCENTAGE:
-                return "/automation_percentage";
+
+            // Requires {'content': 'noc_code'}; returns {'content': 'job risk'}
+            // job risk is a Float
+            case NOC_RISK:
+                return "/nocRisk";
+
+
+            case NOC_TO_TITLE:
+                return "/nocCodeToTitle";
+
+            // Requires NOC_CODE -> Returns report
+            // https://github.com/jQwotos/HootMentor/tree/google-app-engine#ahapijobsearchv1jobsearchmarketreportdetails
+            case MARKET_REPORT:
+                return "/marketReportDetails";
+
         }
         return "";
     }
 
     // HTTP POST request
-    public void post(Endpoint endpoint, String userResponse, DidFinishPostHandler completion) throws Exception {
+    public static void post(Endpoint endpoint, String userResponse, DidFinishPostHandler completion) throws Exception {
         String link = linkForEndpoint(endpoint);
         URL url = new URL("https://hoot-mentor.appspot.com/_ah/api/jobSearch/v1/jobSearch" + link);
 

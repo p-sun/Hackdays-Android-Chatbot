@@ -27,7 +27,9 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MainActivity extends Activity {
 
-    static User user = new User();
+    // TODO make private
+    public static User user = new User();
+
     DialogTree dialog;
     TextToSpeechConvertor textToSpeech;
     SpeechToTextConvertor speechToText;
@@ -48,6 +50,7 @@ public class MainActivity extends Activity {
 	private TextView userTextView;
 
 	private ImageButton owlButton;
+    private ImageButton maxineButton;
     private ImageButton restartButton;
 
     private ImageView owlUserIsSpeakingView;
@@ -62,6 +65,7 @@ public class MainActivity extends Activity {
 		botTextView = (TextView) findViewById(R.id.botTextView);
 		userTextView = (TextView) findViewById(R.id.userTextView);
 		owlButton = (ImageButton) findViewById(R.id.owlButton);
+        maxineButton = (ImageButton) findViewById(R.id.maxineButton);
         restartButton = (ImageButton) findViewById(R.id.restartButton);
         owlUserIsSpeakingView = (ImageView) findViewById(R.id.owlUserIsSpeakingImage);
 
@@ -72,6 +76,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 			    textToSpeech.stop();
+			    speechToText.stopListening();
+                owlButton.setImageResource(R.drawable.owl_waiting);
+                owlUserIsSpeakingView.setVisibility(View.INVISIBLE);
 
                 if (dialog.isAtBeginning()) {
                     displayNextNode("");
@@ -86,8 +93,12 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 botTextView.setText("");
                 userTextView.setText("");
-
                 textToSpeech.stop();
+                speechToText.stopListening();
+                owlButton.setImageResource(R.drawable.owl_waiting);
+                owlUserIsSpeakingView.setVisibility(View.INVISIBLE);
+
+                dialog = DialogTreeBuilder.apiConnectedTree();
 
                 // Reset & ask the first question!
                 dialog.reset();
@@ -96,8 +107,26 @@ public class MainActivity extends Activity {
             }
         });
 
-//        dialog = DialogTreeBuilder.maxineTree();
-        dialog = DialogTreeBuilder.apiConnectedTree();
+        maxineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                botTextView.setText("");
+                userTextView.setText("");
+                textToSpeech.stop();
+                speechToText.stopListening();
+                owlButton.setImageResource(R.drawable.owl_waiting);
+                owlUserIsSpeakingView.setVisibility(View.INVISIBLE);
+
+                dialog = DialogTreeBuilder.maxineTree();
+
+                // Reset & ask the first question!
+                dialog.reset();
+                recommendationIndex = 0;
+                jobs = new ArrayList<JobRecommendation>();
+            }
+        });
+
+        dialog = DialogTreeBuilder.maxineTree();
 
         Permission.requestRecordAudioPermission(getApplicationContext(), this);
         setupTextToSpeech();

@@ -1,18 +1,21 @@
 package info.mentorme.hootmentor;
 
-import info.mentorme.hootmentor.Dialog.ApiEchoNode;
+import info.mentorme.hootmentor.Dialog.ApiAutomationPercentageNode;
+import info.mentorme.hootmentor.Dialog.ApiSimilarJobsNode;
 import info.mentorme.hootmentor.Dialog.ChoiceNode;
 import info.mentorme.hootmentor.Dialog.Tree.DialogTree;
 import info.mentorme.hootmentor.Dialog.NodeSupport.*;
 
 public class DialogTreeBuilder {
     public static DialogTree apiConnectedTree() {
+        // TODO
+//        ApiSimilarJobsNode similarJobs = new
 
-        ApiEchoNode echo = new ApiEchoNode(null);
+        ApiAutomationPercentageNode percentage = new ApiAutomationPercentageNode(null);
 
         ChoiceNode job = new ChoiceNode(
                 "Hoot Hoot! What is your job?",
-                new Node[] {echo},
+                new Node[] {percentage},
                 new NodeAction() {
                     @Override
                     public void userDidTalk(String userTalk) {

@@ -8,4 +8,6 @@ public class User {
     public String name;
     public String currentJob;
     public String education;
+
+    public String[] similarNocCodes;
 }

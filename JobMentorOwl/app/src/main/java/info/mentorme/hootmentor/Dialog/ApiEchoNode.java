@@ -26,9 +26,8 @@ public class ApiEchoNode extends AbstractNode {
     private void postToAPI(String userInput, final BotTalkHandler handler) {
         ApiManager.Endpoint apiType = ApiManager.Endpoint.ECHO;
 
-        ApiManager apiManager = new ApiManager();
         try {
-            apiManager.post(apiType, userInput, new ApiManager.DidFinishPostHandler(){
+            ApiManager.post(apiType, userInput, new ApiManager.DidFinishPostHandler(){
                 @Override
                 public void handle(boolean success, String apiJson) {
                     if (success) {
@@ -41,6 +40,7 @@ public class ApiEchoNode extends AbstractNode {
             });
         } catch (Exception e) {
             System.out.println("Error with POST: " + e);
+            handler.botDidTalk("Uh oh. I network errored");
         }
     }
 
